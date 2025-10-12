@@ -1,0 +1,49 @@
+/dts-v1/;
+
+/ {
+    compatible = "BV,Yellow'sBV";
+    model = "Yellow'sBV";
+
+    cpu {
+        cpu@0 {
+            device_type = "cpu";
+            compatible = "arm, cotex-a9";
+        };
+
+        cpu@1 {
+            device_type = "cpu";
+            compatible = "arm, cotex-a9";
+        };
+    };
+
+    serial0: serial@101B1000 {
+        compatible = "arm, bv011";
+        status = "okay";
+    };
+
+    serial1: serial@101B2000 {
+        compatible = "arm, bv011";
+        status = "okay";
+    };
+
+    gpio@101B3000 {
+        compatible = "arm, bv061";
+        gpio-controller;
+        status = "okay";
+    };
+
+    spi@10180000 {
+        compatible = "arm, bv022";
+        status = "okay";
+    };
+    
+    i2c@10190000 {
+        conpatible = "bv, bv-i2c-bus";
+        status = "okay";
+
+        rtc@58 {
+            compatible = "bv, ds1338";
+            reg = <0x58>;
+        };
+    };
+};

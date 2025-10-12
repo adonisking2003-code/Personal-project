@@ -1,0 +1,1 @@
+# Header cho các hàm tiện ích

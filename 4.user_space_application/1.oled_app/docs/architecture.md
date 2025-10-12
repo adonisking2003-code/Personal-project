@@ -1,0 +1,1 @@
+# Mô tả kiến trúc hệ thống

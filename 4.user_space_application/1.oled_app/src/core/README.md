@@ -1,0 +1,1 @@
+# Logic chính của ứng dụng (main.c, app.c)

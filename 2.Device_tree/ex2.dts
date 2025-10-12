@@ -1,0 +1,75 @@
+/dts-v1/;
+
+/ {
+    compatible = "bv,Yellow'sBV";
+    model = "Yellow'sBV";
+
+    chosen {
+        bootargs = "ignore_loglevel rw root=/dev/nfs ip=on";
+    };
+
+    aliases {
+        serial0 = &serial0;
+        serial1 = &serial1;
+        gpio0 = &gpio0;
+    };
+
+    cpu {
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        cpu@0 {
+            device_type = "cpu";
+            compatible = "arm-cortex-a9";
+            reg = <0>;
+        };
+
+        cpu@1 {
+            device_type = "cpu";
+            compatile = "arm-cortex-a9";
+            reg = <1>;
+        };
+    };
+
+    soc {
+        #address-cells = <1>;
+        #size-cells = <1>;
+
+        serial0: serial@101B1000 {
+            compatible = "arm-bv011";
+            reg = <0x101B1000 0x1000>;
+            status = "okay";
+        };
+
+        serial1: serial@101B2000 {
+            compatible = "arm-bv011";
+            reg = <0x101B2000 0x1000>;
+            status = "okay";
+        };
+
+        gpio0: gpio@101B3000 {
+            compatible = "arm-bv061";
+            reg = <0x101B3000 0x1000>;
+            status = "okay";
+        };
+
+        spi@10180000 {
+            compatible = "arm,bv022";
+            reg = <0x180000 0x1000>;
+            status = "okay";
+        };
+
+        i2c@10190000 {
+            compatible = "bv,bv-i2c-bus";
+            reg = <0x10190000 0x1000>;
+            #address-cells = <1>;
+            #size-cells = <0>;
+            status = "okay";
+
+            rts@58 {
+                compatible = "bv,ds1338";
+                reg = <0x58>;
+            };
+        };
+    };
+};
