@@ -30,7 +30,7 @@ CMAKE_COLOR_MAKEFILE:BOOL=ON
 CMAKE_CXX_FLAGS:STRING= -O2 -g  -pipe
 
 //C compiler
-CMAKE_C_COMPILER:FILEPATH=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/bin/aarch64-poky-linux/aarch64-poky-linux-gcc
+CMAKE_C_COMPILER:STRING=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/bin/aarch64-poky-linux/aarch64-poky-linux-gcc
 
 //A wrapper around 'ar' adding the appropriate '--plugin' option
 // for the GCC compiler
@@ -187,8 +187,8 @@ CMAKE_STRIP:FILEPATH=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroot
 //Path to a program.
 CMAKE_TAPI:FILEPATH=CMAKE_TAPI-NOTFOUND
 
-//The CMake toolchain file
-CMAKE_TOOLCHAIN_FILE:FILEPATH=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/share/cmake/OEToolchainConfig.cmake
+//No help, variable specified on the command line.
+CMAKE_TOOLCHAIN_FILE:UNINITIALIZED=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/share/cmake/OEToolchainConfig.cmake
 
 //If this value is on, makefiles will be generated without the
 // .SILENT directive, and all commands will be echoed to the console

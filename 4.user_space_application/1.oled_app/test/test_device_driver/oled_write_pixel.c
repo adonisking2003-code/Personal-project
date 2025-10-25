@@ -19,7 +19,6 @@ int main()
         return 1;
     }
 
-    // // Tổng kích thước buffer
     size_t buffer_size = PAGE_NUM * COL_NUM;
     unsigned char buffer[buffer_size];
 
@@ -27,29 +26,44 @@ int main()
 
     printf("Clear display \n");
 
-    clear_display(fd);
+    oled_clear_display(fd);
 
-    // draw_bit_map(fd, 0, 0, &VietNam_map[0], 128, 64, true);
-
-    // delay_ms(2000);
-
-    // update_oled_display(fd);
-    // delay_ms(2000);
-
-    // clear_display(fd);
-    // memset(buffer, 0xFF, buffer_size);
-    // ssize_t ret = write(fd, buffer, buffer_size);
-    // delay_ms(2000);
-
-    // draw_bit_map(fd, 30, 5, &flappyBirdBitmap[0], 50, 50, true);
-    // update_oled_display(fd);
-
-    // clear_display(fd);
-    // delay_ms(2000);
-
-    draw_bit_map(fd, 0, 0, &number_1[0], 1, 16, true);
     update_oled_display(fd);
-    print_display_buffer();
+    delay_ms(2000);
+    // Test all characters
+    unsigned char *test_data[] = {
+        number_0, number_1, number_2, number_3, number_4,
+        number_5, number_6, number_7, number_8, number_9,
+        user_char_A, user_char_B, user_char_C, user_char_D, user_char_E,
+        user_char_F, user_char_G, user_char_H, user_char_I, user_char_J,
+        user_char_K, user_char_L, user_char_M, user_char_N, user_char_O,
+        user_char_P, user_char_Q, user_char_R, user_char_S, user_char_T,
+        user_char_U, user_char_V, user_char_W, user_char_X, user_char_Y,
+        user_char_Z, user_char_space, user_char_colon, user_char_dot,
+        user_char_minus, user_char_exclamation, user_char_comma
+    };
+    int x = 0, y = 0;
+    for(int i = 0; i < sizeof(test_data)/sizeof(test_data[0]); i++) {
+        if(test_data[i] == user_char_space || test_data[i] == user_char_colon ||
+           test_data[i] == user_char_dot || test_data[i] == user_char_minus ||
+           test_data[i] == user_char_exclamation || test_data[i] == user_char_comma) 
+        {
+            draw_bit_map(fd, x, y, &test_data[i][0], 2, 16, true);
+        }
+        else {
+            draw_bit_map(fd, x, y, &test_data[i][0], 10, 16, true);
+        }
+        x += 10;
+        if (x >= 128) {
+            x = 0;
+            y += 16;
+        }
+        if (y >= 64) {
+            break;
+        }
+    }
+    update_oled_display(fd);
+    delay_ms(5000);
     close(fd);
     return 0;
 }

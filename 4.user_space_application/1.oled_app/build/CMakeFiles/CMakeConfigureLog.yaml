@@ -301,3 +301,250 @@ events:
         
       exitCode: 0
 ...
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-3.28/Modules/CMakeDetermineSystem.cmake:233 (message)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      The system is: Linux - 6.14.0-33-generic - x86_64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake-3.28/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/bin/aarch64-poky-linux/aarch64-poky-linux-gcc -mcpu=cortex-a72+crc;-mbranch-protection=standard;-fstack-protector-strong;-O2;-D_FORTIFY_SOURCE=2;-Wformat;-Wformat-security;-Werror=format-security;--sysroot=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux
+      Build flags: -O2;-g;-pipe
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+      
+      The C compiler identification is GNU, found in:
+        /home/adonisking/Learning_Linux/4.user_space_application/1.oled_app/build/CMakeFiles/3.28.3/CompilerIdC/a.out
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "/usr/share/cmake-3.28/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "/home/adonisking/Learning_Linux/4.user_space_application/1.oled_app/build/CMakeFiles/CMakeScratch/TryCompile-SmxL0T"
+      binary: "/home/adonisking/Learning_Linux/4.user_space_application/1.oled_app/build/CMakeFiles/CMakeScratch/TryCompile-SmxL0T"
+    cmakeVariables:
+      CMAKE_C_FLAGS: " -O2 -g  -pipe"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: "-Wl,-O1 -Wl,--hash-style=gnu -Wl,--as-needed  -Wl,-z,relro,-z,now"
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/home/adonisking/Learning_Linux/4.user_space_application/1.oled_app/build/CMakeFiles/CMakeScratch/TryCompile-SmxL0T'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_23ccd/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_23ccd.dir/build.make CMakeFiles/cmTC_23ccd.dir/build
+        gmake[1]: Entering directory '/home/adonisking/Learning_Linux/4.user_space_application/1.oled_app/build/CMakeFiles/CMakeScratch/TryCompile-SmxL0T'
+        Building C object CMakeFiles/cmTC_23ccd.dir/CMakeCCompilerABI.c.o
+        /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/bin/aarch64-poky-linux/aarch64-poky-linux-gcc   -mcpu=cortex-a72+crc -mbranch-protection=standard -fstack-protector-strong  -O2 -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security --sysroot=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux   -O2 -g  -pipe    -v -o CMakeFiles/cmTC_23ccd.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.28/Modules/CMakeCCompilerABI.c
+        Using built-in specs.
+        COLLECT_GCC=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/bin/aarch64-poky-linux/aarch64-poky-linux-gcc
+        Target: aarch64-poky-linux
+        Configured with: ../../../../../../work-shared/gcc-14.2.0-r0/gcc-14.2.0/configure --build=x86_64-linux --host=x86_64-pokysdk-linux --target=aarch64-poky-linux --prefix=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr --exec_prefix=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr --bindir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/bin/aarch64-poky-linux --sbindir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/bin/aarch64-poky-linux --libexecdir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux --datadir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/share --sysconfdir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/etc --sharedstatedir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/com --localstatedir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/var --libdir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux --includedir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/include --oldincludedir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/include --infodir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/share/info --mandir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/share/man --disable-silent-rules --disable-dependency-tracking --with-gnu-ld --enable-shared --enable-languages=c,c++ --enable-threads=posix --enable-multilib --enable-default-pie --enable-c99 --enable-long-long --enable-symvers=gnu --enable-libstdcxx-pch --program-prefix=aarch64-poky-linux- --without-local-prefix --disable-install-libiberty --disable-libssp --enable-libitm --enable-lto --disable-bootstrap --with-system-zlib --with-linker-hash-style=gnu --enable-linker-build-id --with-ppl=no --with-cloog=no --enable-checking=release --enable-cheaders=c_global --without-isl --with-gxx-include-dir=/not/exist/usr/include/c++/14.2.0 --with-gxx-libcxx-include-dir=/not/exist/usr/include/c++/v1 --with-build-time-tools=/host-native/usr/aarch64-poky-linux/bin --with-sysroot=/not/exist --with-build-sysroot=/host --with-plugin-ld=ld --enable-poison-system-directories --disable-static --enable-nls --with-glibc-version=2.28 --enable-initfini-array --enable-__cxa_atexit
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 14.2.0 (GCC) 
+        COLLECT_GCC_OPTIONS='-mcpu=cortex-a72+crc' '-mbranch-protection=standard' '-fstack-protector-strong' '-O2' '-D' '_FORTIFY_SOURCE=2' '-Wformat=1' '-Wformat-security' '-Werror=format-security' '--sysroot=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux' '-O2' '-g' '-pipe' '-v' '-o' 'CMakeFiles/cmTC_23ccd.dir/CMakeCCompilerABI.c.o' '-c' '-mlittle-endian' '-mabi=lp64' '-dumpdir' 'CMakeFiles/cmTC_23ccd.dir/'
+         /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/cc1 -quiet -v -isysroot /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux -D _FORTIFY_SOURCE=2 /usr/share/cmake-3.28/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_23ccd.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mcpu=cortex-a72+crc -mbranch-protection=standard -mlittle-endian -mabi=lp64 -g -O2 -O2 -Wformat=1 -Wformat-security -Werror=format-security -version -fstack-protector-strong -o - |
+         /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/as -v --gdwarf-5 -EL -march=armv8-a+crc -mabi=lp64 -o CMakeFiles/cmTC_23ccd.dir/CMakeCCompilerABI.c.o
+        GNU assembler version 2.44.0 (aarch64-poky-linux) using BFD version (GNU Binutils) 2.44.0.20250513
+        GNU C17 (GCC) version 14.2.0 (aarch64-poky-linux)
+        	compiled by GNU C version 14.2.0, GMP version 6.3.0, MPFR version 4.2.1, MPC version 1.3.1, isl version none
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/include
+         /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/aarch64-poky-linux/14.2.0/include
+         /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/local/include
+         /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/include-fixed
+         /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/../../../../../aarch64-poky-linux/include
+         /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/include/
+        End of search list.
+        Compiler executable checksum: 84a799b3d5d94bbdde94e5a711f053c0
+        COMPILER_PATH=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/:/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/:/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux/gcc/aarch64-poky-linux/:/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/:/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/
+        LIBRARY_PATH=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/:/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/lib/:/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/aarch64-poky-linux/14.2.0/:/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/
+        COLLECT_GCC_OPTIONS='-mcpu=cortex-a72+crc' '-mbranch-protection=standard' '-fstack-protector-strong' '-O2' '-D' '_FORTIFY_SOURCE=2' '-Wformat=1' '-Wformat-security' '-Werror=format-security' '--sysroot=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux' '-O2' '-g' '-pipe' '-v' '-o' 'CMakeFiles/cmTC_23ccd.dir/CMakeCCompilerABI.c.o' '-c' '-mlittle-endian' '-mabi=lp64' '-dumpdir' 'CMakeFiles/cmTC_23ccd.dir/CMakeCCompilerABI.c.'
+        Linking C executable cmTC_23ccd
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_23ccd.dir/link.txt --verbose=1
+        /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/bin/aarch64-poky-linux/aarch64-poky-linux-gcc   -mcpu=cortex-a72+crc -mbranch-protection=standard -fstack-protector-strong  -O2 -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security --sysroot=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux  -O2 -g  -pipe  -Wl,-O1 -Wl,--hash-style=gnu -Wl,--as-needed  -Wl,-z,relro,-z,now -v CMakeFiles/cmTC_23ccd.dir/CMakeCCompilerABI.c.o -o cmTC_23ccd 
+        Using built-in specs.
+        COLLECT_GCC=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/bin/aarch64-poky-linux/aarch64-poky-linux-gcc
+        COLLECT_LTO_WRAPPER=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/lto-wrapper
+        Target: aarch64-poky-linux
+        Configured with: ../../../../../../work-shared/gcc-14.2.0-r0/gcc-14.2.0/configure --build=x86_64-linux --host=x86_64-pokysdk-linux --target=aarch64-poky-linux --prefix=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr --exec_prefix=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr --bindir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/bin/aarch64-poky-linux --sbindir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/bin/aarch64-poky-linux --libexecdir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux --datadir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/share --sysconfdir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/etc --sharedstatedir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/com --localstatedir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/var --libdir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux --includedir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/include --oldincludedir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/include --infodir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/share/info --mandir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/share/man --disable-silent-rules --disable-dependency-tracking --with-gnu-ld --enable-shared --enable-languages=c,c++ --enable-threads=posix --enable-multilib --enable-default-pie --enable-c99 --enable-long-long --enable-symvers=gnu --enable-libstdcxx-pch --program-prefix=aarch64-poky-linux- --without-local-prefix --disable-install-libiberty --disable-libssp --enable-libitm --enable-lto --disable-bootstrap --with-system-zlib --with-linker-hash-style=gnu --enable-linker-build-id --with-ppl=no --with-cloog=no --enable-checking=release --enable-cheaders=c_global --without-isl --with-gxx-include-dir=/not/exist/usr/include/c++/14.2.0 --with-gxx-libcxx-include-dir=/not/exist/usr/include/c++/v1 --with-build-time-tools=/host-native/usr/aarch64-poky-linux/bin --with-sysroot=/not/exist --with-build-sysroot=/host --with-plugin-ld=ld --enable-poison-system-directories --disable-static --enable-nls --with-glibc-version=2.28 --enable-initfini-array --enable-__cxa_atexit
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 14.2.0 (GCC) 
+        COMPILER_PATH=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/:/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/:/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux/gcc/aarch64-poky-linux/:/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/:/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/
+        LIBRARY_PATH=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/:/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/lib/:/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/aarch64-poky-linux/14.2.0/:/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/
+        COLLECT_GCC_OPTIONS='-mcpu=cortex-a72+crc' '-mbranch-protection=standard' '-fstack-protector-strong' '-O2' '-D' '_FORTIFY_SOURCE=2' '-Wformat=1' '-Wformat-security' '-Werror=format-security' '--sysroot=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux' '-O2' '-g' '-pipe' '-v' '-o' 'cmTC_23ccd' '-mlittle-endian' '-mabi=lp64' '-dumpdir' 'cmTC_23ccd.'
+         /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/collect2 -plugin /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/liblto_plugin.so -plugin-opt=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccV9hD2b.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux --build-id --eh-frame-hdr --hash-style=gnu -dynamic-linker /lib/ld-linux-aarch64.so.1 -X -EL -maarch64linux -pie -o cmTC_23ccd /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/Scrt1.o /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/crti.o /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/aarch64-poky-linux/14.2.0/crtbeginS.o -L/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0 -L/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/lib -L/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/aarch64-poky-linux/14.2.0 -L/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib -O1 --hash-style=gnu --as-needed -z relro -z now CMakeFiles/cmTC_23ccd.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/aarch64-poky-linux/14.2.0/crtendS.o /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/crtn.o
+        COLLECT_GCC_OPTIONS='-mcpu=cortex-a72+crc' '-mbranch-protection=standard' '-fstack-protector-strong' '-O2' '-D' '_FORTIFY_SOURCE=2' '-Wformat=1' '-Wformat-security' '-Werror=format-security' '--sysroot=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux' '-O2' '-g' '-pipe' '-v' '-o' 'cmTC_23ccd' '-mlittle-endian' '-mabi=lp64' '-dumpdir' 'cmTC_23ccd.'
+        gmake[1]: Leaving directory '/home/adonisking/Learning_Linux/4.user_space_application/1.oled_app/build/CMakeFiles/CMakeScratch/TryCompile-SmxL0T'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:127 (message)"
+      - "/usr/share/cmake-3.28/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/include]
+          add: [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/aarch64-poky-linux/14.2.0/include]
+          add: [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/local/include]
+          add: [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/include-fixed]
+          add: [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/../../../../../aarch64-poky-linux/include]
+          add: [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/include/]
+        end of search list found
+        collapse include dir [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/include] ==> [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/include]
+        collapse include dir [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/aarch64-poky-linux/14.2.0/include] ==> [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/aarch64-poky-linux/14.2.0/include]
+        collapse include dir [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/local/include] ==> [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/local/include]
+        collapse include dir [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/include-fixed] ==> [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/include-fixed]
+        collapse include dir [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/../../../../../aarch64-poky-linux/include] ==> [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/aarch64-poky-linux/include]
+        collapse include dir [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/include/] ==> [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/include]
+        implicit include dirs: [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/include;/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/aarch64-poky-linux/14.2.0/include;/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/local/include;/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/include-fixed;/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/aarch64-poky-linux/include;/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:159 (message)"
+      - "/usr/share/cmake-3.28/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(aarch64-poky-linux-ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: '/home/adonisking/Learning_Linux/4.user_space_application/1.oled_app/build/CMakeFiles/CMakeScratch/TryCompile-SmxL0T']
+        ignore line: []
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_23ccd/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_23ccd.dir/build.make CMakeFiles/cmTC_23ccd.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/adonisking/Learning_Linux/4.user_space_application/1.oled_app/build/CMakeFiles/CMakeScratch/TryCompile-SmxL0T']
+        ignore line: [Building C object CMakeFiles/cmTC_23ccd.dir/CMakeCCompilerABI.c.o]
+        ignore line: [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/bin/aarch64-poky-linux/aarch64-poky-linux-gcc   -mcpu=cortex-a72+crc -mbranch-protection=standard -fstack-protector-strong  -O2 -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security --sysroot=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux   -O2 -g  -pipe    -v -o CMakeFiles/cmTC_23ccd.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.28/Modules/CMakeCCompilerABI.c]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/bin/aarch64-poky-linux/aarch64-poky-linux-gcc]
+        ignore line: [Target: aarch64-poky-linux]
+        ignore line: [Configured with: ../../../../../../work-shared/gcc-14.2.0-r0/gcc-14.2.0/configure --build=x86_64-linux --host=x86_64-pokysdk-linux --target=aarch64-poky-linux --prefix=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr --exec_prefix=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr --bindir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/bin/aarch64-poky-linux --sbindir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/bin/aarch64-poky-linux --libexecdir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux --datadir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/share --sysconfdir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/etc --sharedstatedir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/com --localstatedir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/var --libdir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux --includedir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/include --oldincludedir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/include --infodir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/share/info --mandir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/share/man --disable-silent-rules --disable-dependency-tracking --with-gnu-ld --enable-shared --enable-languages=c,c++ --enable-threads=posix --enable-multilib --enable-default-pie --enable-c99 --enable-long-long --enable-symvers=gnu --enable-libstdcxx-pch --program-prefix=aarch64-poky-linux- --without-local-prefix --disable-install-libiberty --disable-libssp --enable-libitm --enable-lto --disable-bootstrap --with-system-zlib --with-linker-hash-style=gnu --enable-linker-build-id --with-ppl=no --with-cloog=no --enable-checking=release --enable-cheaders=c_global --without-isl --with-gxx-include-dir=/not/exist/usr/include/c++/14.2.0 --with-gxx-libcxx-include-dir=/not/exist/usr/include/c++/v1 --with-build-time-tools=/host-native/usr/aarch64-poky-linux/bin --with-sysroot=/not/exist --with-build-sysroot=/host --with-plugin-ld=ld --enable-poison-system-directories --disable-static --enable-nls --with-glibc-version=2.28 --enable-initfini-array --enable-__cxa_atexit]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 14.2.0 (GCC) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-a72+crc' '-mbranch-protection=standard' '-fstack-protector-strong' '-O2' '-D' '_FORTIFY_SOURCE=2' '-Wformat=1' '-Wformat-security' '-Werror=format-security' '--sysroot=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux' '-O2' '-g' '-pipe' '-v' '-o' 'CMakeFiles/cmTC_23ccd.dir/CMakeCCompilerABI.c.o' '-c' '-mlittle-endian' '-mabi=lp64' '-dumpdir' 'CMakeFiles/cmTC_23ccd.dir/']
+        ignore line: [ /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/cc1 -quiet -v -isysroot /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux -D _FORTIFY_SOURCE=2 /usr/share/cmake-3.28/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_23ccd.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mcpu=cortex-a72+crc -mbranch-protection=standard -mlittle-endian -mabi=lp64 -g -O2 -O2 -Wformat=1 -Wformat-security -Werror=format-security -version -fstack-protector-strong -o - |]
+        ignore line: [ /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/as -v --gdwarf-5 -EL -march=armv8-a+crc -mabi=lp64 -o CMakeFiles/cmTC_23ccd.dir/CMakeCCompilerABI.c.o]
+        ignore line: [GNU assembler version 2.44.0 (aarch64-poky-linux) using BFD version (GNU Binutils) 2.44.0.20250513]
+        ignore line: [GNU C17 (GCC) version 14.2.0 (aarch64-poky-linux)]
+        ignore line: [	compiled by GNU C version 14.2.0  GMP version 6.3.0  MPFR version 4.2.1  MPC version 1.3.1  isl version none]
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/include]
+        ignore line: [ /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/aarch64-poky-linux/14.2.0/include]
+        ignore line: [ /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/local/include]
+        ignore line: [ /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/include-fixed]
+        ignore line: [ /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/../../../../../aarch64-poky-linux/include]
+        ignore line: [ /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/include/]
+        ignore line: [End of search list.]
+        ignore line: [Compiler executable checksum: 84a799b3d5d94bbdde94e5a711f053c0]
+        ignore line: [COMPILER_PATH=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/:/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/:/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux/gcc/aarch64-poky-linux/:/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/:/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/]
+        ignore line: [LIBRARY_PATH=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/:/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/lib/:/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/aarch64-poky-linux/14.2.0/:/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-a72+crc' '-mbranch-protection=standard' '-fstack-protector-strong' '-O2' '-D' '_FORTIFY_SOURCE=2' '-Wformat=1' '-Wformat-security' '-Werror=format-security' '--sysroot=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux' '-O2' '-g' '-pipe' '-v' '-o' 'CMakeFiles/cmTC_23ccd.dir/CMakeCCompilerABI.c.o' '-c' '-mlittle-endian' '-mabi=lp64' '-dumpdir' 'CMakeFiles/cmTC_23ccd.dir/CMakeCCompilerABI.c.']
+        ignore line: [Linking C executable cmTC_23ccd]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_23ccd.dir/link.txt --verbose=1]
+        ignore line: [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/bin/aarch64-poky-linux/aarch64-poky-linux-gcc   -mcpu=cortex-a72+crc -mbranch-protection=standard -fstack-protector-strong  -O2 -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security --sysroot=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux  -O2 -g  -pipe  -Wl -O1 -Wl --hash-style=gnu -Wl --as-needed  -Wl -z relro -z now -v CMakeFiles/cmTC_23ccd.dir/CMakeCCompilerABI.c.o -o cmTC_23ccd ]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/bin/aarch64-poky-linux/aarch64-poky-linux-gcc]
+        ignore line: [COLLECT_LTO_WRAPPER=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/lto-wrapper]
+        ignore line: [Target: aarch64-poky-linux]
+        ignore line: [Configured with: ../../../../../../work-shared/gcc-14.2.0-r0/gcc-14.2.0/configure --build=x86_64-linux --host=x86_64-pokysdk-linux --target=aarch64-poky-linux --prefix=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr --exec_prefix=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr --bindir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/bin/aarch64-poky-linux --sbindir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/bin/aarch64-poky-linux --libexecdir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux --datadir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/share --sysconfdir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/etc --sharedstatedir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/com --localstatedir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/var --libdir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux --includedir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/include --oldincludedir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/include --infodir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/share/info --mandir=/usr/local/oe-sdk-hardcoded-buildpath/sysroots/x86_64-pokysdk-linux/usr/share/man --disable-silent-rules --disable-dependency-tracking --with-gnu-ld --enable-shared --enable-languages=c,c++ --enable-threads=posix --enable-multilib --enable-default-pie --enable-c99 --enable-long-long --enable-symvers=gnu --enable-libstdcxx-pch --program-prefix=aarch64-poky-linux- --without-local-prefix --disable-install-libiberty --disable-libssp --enable-libitm --enable-lto --disable-bootstrap --with-system-zlib --with-linker-hash-style=gnu --enable-linker-build-id --with-ppl=no --with-cloog=no --enable-checking=release --enable-cheaders=c_global --without-isl --with-gxx-include-dir=/not/exist/usr/include/c++/14.2.0 --with-gxx-libcxx-include-dir=/not/exist/usr/include/c++/v1 --with-build-time-tools=/host-native/usr/aarch64-poky-linux/bin --with-sysroot=/not/exist --with-build-sysroot=/host --with-plugin-ld=ld --enable-poison-system-directories --disable-static --enable-nls --with-glibc-version=2.28 --enable-initfini-array --enable-__cxa_atexit]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 14.2.0 (GCC) ]
+        ignore line: [COMPILER_PATH=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/:/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/:/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux/gcc/aarch64-poky-linux/:/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/:/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/]
+        ignore line: [LIBRARY_PATH=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/:/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/lib/:/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/aarch64-poky-linux/14.2.0/:/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-a72+crc' '-mbranch-protection=standard' '-fstack-protector-strong' '-O2' '-D' '_FORTIFY_SOURCE=2' '-Wformat=1' '-Wformat-security' '-Werror=format-security' '--sysroot=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux' '-O2' '-g' '-pipe' '-v' '-o' 'cmTC_23ccd' '-mlittle-endian' '-mabi=lp64' '-dumpdir' 'cmTC_23ccd.']
+        link line: [ /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/collect2 -plugin /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/liblto_plugin.so -plugin-opt=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccV9hD2b.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux --build-id --eh-frame-hdr --hash-style=gnu -dynamic-linker /lib/ld-linux-aarch64.so.1 -X -EL -maarch64linux -pie -o cmTC_23ccd /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/Scrt1.o /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/crti.o /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/aarch64-poky-linux/14.2.0/crtbeginS.o -L/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0 -L/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/lib -L/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/aarch64-poky-linux/14.2.0 -L/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib -O1 --hash-style=gnu --as-needed -z relro -z now CMakeFiles/cmTC_23ccd.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/aarch64-poky-linux/14.2.0/crtendS.o /home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/crtn.o]
+          arg [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/libexec/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccV9hD2b.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [--sysroot=/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux] ==> ignore
+          arg [--build-id] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [--hash-style=gnu] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib/ld-linux-aarch64.so.1] ==> ignore
+          arg [-X] ==> ignore
+          arg [-EL] ==> ignore
+          arg [-maarch64linux] ==> ignore
+          arg [-pie] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_23ccd] ==> ignore
+          arg [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/Scrt1.o] ==> obj [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/Scrt1.o]
+          arg [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/crti.o] ==> obj [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/crti.o]
+          arg [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/aarch64-poky-linux/14.2.0/crtbeginS.o] ==> obj [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/aarch64-poky-linux/14.2.0/crtbeginS.o]
+          arg [-L/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0] ==> dir [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0]
+          arg [-L/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/lib] ==> dir [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/lib]
+          arg [-L/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/aarch64-poky-linux/14.2.0] ==> dir [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/aarch64-poky-linux/14.2.0]
+          arg [-L/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib] ==> dir [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib]
+          arg [-O1] ==> ignore
+          arg [--hash-style=gnu] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-zrelro] ==> ignore
+          arg [-znow] ==> ignore
+          arg [CMakeFiles/cmTC_23ccd.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [-lgcc] ==> lib [gcc]
+          arg [--push-state] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [--pop-state] ==> ignore
+          arg [-lc] ==> lib [c]
+          arg [-lgcc] ==> lib [gcc]
+          arg [--push-state] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [--pop-state] ==> ignore
+          arg [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/aarch64-poky-linux/14.2.0/crtendS.o] ==> obj [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/aarch64-poky-linux/14.2.0/crtendS.o]
+          arg [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/crtn.o] ==> obj [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/crtn.o]
+        collapse library dir [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0] ==> [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0]
+        collapse library dir [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/lib] ==> [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/lib]
+        collapse library dir [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/aarch64-poky-linux/14.2.0] ==> [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/aarch64-poky-linux/14.2.0]
+        collapse library dir [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib] ==> [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib]
+        implicit libs: [gcc;gcc_s;c;gcc;gcc_s]
+        implicit objs: [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/Scrt1.o;/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/crti.o;/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/aarch64-poky-linux/14.2.0/crtbeginS.o;/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/aarch64-poky-linux/14.2.0/crtendS.o;/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/crtn.o]
+        implicit dirs: [/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/x86_64-pokysdk-linux/usr/lib/aarch64-poky-linux/gcc/aarch64-poky-linux/14.2.0;/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/lib;/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib/aarch64-poky-linux/14.2.0;/home/adonisking/Learning_Linux/3.Device_driver/SDK/sysroots/cortexa72-poky-linux/usr/lib]
+        implicit fwks: []
+      
+      
+...

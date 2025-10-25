@@ -29,7 +29,7 @@ void oled_run_test()
     }
     write_display_buffer(fd, &buffer[0][0], 8*128);
     delay_ms(5000);
-    clear_display(fd);
+    oled_clear_display(fd);
     draw_pixel(64, 32, 0xFF);
     update_oled_display(fd);
     delay_ms(5000);

@@ -24,7 +24,7 @@
 
 void set_brightness(int fd, int level);
 void set_rotation(int fd, int rotation);
-void clear_display(int fd);
+void oled_clear_display(int fd);
 void set_display_mode(int fd, int mode);
 uint8_t read_display_buffer(int fd, uint8_t *buffer, size_t size);
 uint8_t write_display_buffer(int fd, uint8_t *buffer, size_t size);
@@ -45,6 +45,7 @@ void setTextSize(int fd, uint8_t text_size);
 void draw_bit_map(int fd, uint8_t x, uint8_t y, unsigned char* bitmap, uint8_t width, uint8_t height, bool color);
 uint8_t update_oled_display(int fd);
 void print_display_buffer();
+void oled_print_str(int fd, const char *str, uint8_t cursor_x, uint8_t cursor_y, bool color);
 
 int ssd1306_init(void);
 void ssd1306_close(int fd);
