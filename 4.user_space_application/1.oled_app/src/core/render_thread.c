@@ -5,8 +5,10 @@
 #include <unistd.h>
 #include "render_thread.h"
 #include "ssd1306_data.h"
+#include "game_logic_thread.h"
 
 extern eGameState game_state;
+extern bool render_flag;
 extern struct stBirdInfo bird;
 extern struct stColumnList col_list;
 extern struct stGameInfo game_info;
@@ -58,7 +60,7 @@ void start_screen(int fd)
 {
     oled_clear_display(fd);
     printf("Start Screen\n");
-    draw_rectangle(fd, 0, SCREEN_WIDTH, SCREEN_HEIGHT, false);
+    draw_rectangle(fd, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, false);
     oled_print_str(fd, "Flappy Bird", 0, 5, true);
     oled_print_str(fd, "Start!", 39, 25, true);
     update_oled_display(fd);
@@ -68,11 +70,11 @@ void end_screen(int fd)
 {
     oled_clear_display(fd);
     printf("End Screen\n");
-    draw_rectangle(fd, 0, SCREEN_WIDTH, SCREEN_HEIGHT, false);
+    draw_rectangle(fd, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, false);
     oled_print_str(fd, "Game Over", 20, 5, true);
     
     char score_str[20];
-    snprintf(score_str, sizeof(score_str), "Score: %d", game_info.score);
+    snprintf(score_str, sizeof(score_str), "Score: %d", game_info.points);
     oled_print_str(fd, score_str, 30, 25, true);
     
     oled_print_str(fd, "Restart?", 30, 45, true);

@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "game_logic_thread.h"
+#include "button.h"
 
 eGameState game_state = GAME_STATE_READY;
 bool render_flag = false;
@@ -17,10 +18,10 @@ void *game_logic_thread_func(void *arg)
 {
     while(1)
     {
-        if(game_state == GAME_STATE_START)
+        if(game_state == GAME_STATE_READY)
         {
             // Wait for user input to start the game
-            if(is_button_pressed(BUTTON_GPIO))
+            if(button_is_pressed(BUTTON_LINE_OFFSET))
             {
                 game_state = GAME_STATE_PLAYING;
                 render_flag = true;
@@ -29,7 +30,7 @@ void *game_logic_thread_func(void *arg)
         else if(game_state == GAME_STATE_PLAYING)
         {
             // Update bird position
-            if(is_button_pressed(BUTTON_GPIO))
+            if(button_is_pressed(BUTTON_LINE_OFFSET))
             {
                 move_up(&bird);
             }
@@ -44,8 +45,7 @@ void *game_logic_thread_func(void *arg)
             // Check for collisions
             if(check_bird_collision(&bird, &col_list) < 0)
             {
-                game_state = GAME_STATE_GAMEOVER;
-                game_info.score = game_info.points;
+                game_state = GAME_STATE_OVER;
                 render_flag = true;
             }
 
@@ -55,13 +55,13 @@ void *game_logic_thread_func(void *arg)
                 increase_point(&game_info);
             }
         }
-        else if(game_state == GAME_STATE_GAMEOVER)
+        else if(game_state == GAME_STATE_OVER)
         {
             // Handle game over state
-            if(is_button_pressed(BUTTON_GPIO))
+            if(button_is_pressed(BUTTON_LINE_OFFSET))
             {
                 init_game(game_velocity);
-                game_state = GAME_STATE_START;
+                game_state = GAME_STATE_READY;
                 render_flag = true;
             }
         }
@@ -132,7 +132,7 @@ void init_column(struct stColumnList *stColLst)
 void init_game_info(struct stGameInfo *game_info)
 {
     game_info->points = 0;
-    game_info->status = GAME_READY;
+    game_info->status = GAME_STATE_READY;
     game_info->time_play = 0;
 }
 

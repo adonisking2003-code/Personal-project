@@ -39,7 +39,7 @@ struct stColumnList {
 
 typedef struct stGameInfo {
 	int points;
-	eGameStatus status;
+	eGameState status;
 	int time_play;
 } stGameInfo;
 

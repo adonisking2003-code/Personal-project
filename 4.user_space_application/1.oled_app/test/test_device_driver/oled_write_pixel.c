@@ -43,7 +43,8 @@ int main()
         user_char_minus, user_char_exclamation, user_char_comma
     };
     int x = 0, y = 0;
-    for(int i = 0; i < sizeof(test_data)/sizeof(test_data[0]); i++) {
+    // for(int i = 0; i < sizeof(test_data)/sizeof(test_data[0]); i++) {
+    for(int i = 36; i < 42; i++) {
         if(test_data[i] == user_char_space || test_data[i] == user_char_colon ||
            test_data[i] == user_char_dot || test_data[i] == user_char_minus ||
            test_data[i] == user_char_exclamation || test_data[i] == user_char_comma) 
