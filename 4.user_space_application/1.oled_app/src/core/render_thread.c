@@ -6,19 +6,40 @@
 #include "render_thread.h"
 #include "ssd1306_data.h"
 
-extern volatile int game_state;     // From game_logic_thread.c
+extern eGameState game_state;
 extern struct stBirdInfo bird;
 extern struct stColumnList col_list;
 extern struct stGameInfo game_info;
 
-static int game_state = GAME_STATE_START;
-
 void *render_thread_func(void *arg)
 {
+    int fd = (int)arg; // Cast arg to int file descriptor
     while(1)
-    {
+    {   
         // render buffer
-        usleep(500000); // Run at 2Hz, adjust if needed
+        if(render_flag)
+        {
+            if(game_state == GAME_STATE_READY)
+            {
+                start_screen(fd);
+            }
+
+            else if(game_state == GAME_STATE_PLAYING)
+            {
+                oled_clear_display(fd);
+                draw_bird(fd, &bird);
+                draw_column(fd, &col_list);
+                update_oled_display(fd);
+            }
+
+            else if(game_state == GAME_STATE_OVER)
+            {
+                end_screen(fd);
+            }
+
+            render_flag = false;
+        }
+        usleep(33333); // Run at 30Hz (30 frame/s), adjust if needed
     }
     return NULL;
 }

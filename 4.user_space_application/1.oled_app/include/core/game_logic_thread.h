@@ -11,10 +11,10 @@
 #define COLUMN_WIDTH 5
 
 typedef enum {
-	GAME_READY 	= 0,
-	GAME_PLAY,
-	GAME_OVER
-} eGameStatus;
+	GAME_STATE_READY 	= 0,
+	GAME_STATE_PLAYING,
+	GAME_STATE_OVER
+} eGameState;
 
 typedef struct stBirdInfo {
 	uint8_t bird_x;

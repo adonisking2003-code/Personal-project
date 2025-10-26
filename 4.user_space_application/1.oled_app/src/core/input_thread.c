@@ -7,8 +7,6 @@
 #include <button.h>
 #include <utils.h>
 
-volatile int input_state = 0; // Shared input state
-
 void *thread_read_button(void* arg)
 {
     int*val = (int*)arg;

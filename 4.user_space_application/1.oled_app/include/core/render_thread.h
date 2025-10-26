@@ -3,12 +3,6 @@
 
 #include "game_logic_thread.h"
 
-typedef enum {
-    GAME_STATE_START,
-    GAME_STATE_PLAYING,
-    GAME_STATE_GAMEOVER
-} GameState;
-
 void *render_thread_func(void *arg);
 void draw_column(int fd, struct stColumnList *col_list);
 void draw_bird(int fd, struct stBirdInfo *bird);

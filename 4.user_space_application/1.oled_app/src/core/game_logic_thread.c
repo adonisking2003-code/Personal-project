@@ -4,8 +4,9 @@
 #include <unistd.h>
 #include "game_logic_thread.h"
 
-extern volatile int input_state;    // From input_thread.c
-volatile int game_state             = 0;        // Shared game state
+eGameState game_state = GAME_STATE_READY;
+bool render_flag = false;
+
 struct stBirdInfo bird;
 struct stColumnList col_list;
 struct stGameInfo game_info;
@@ -16,11 +17,54 @@ void *game_logic_thread_func(void *arg)
 {
     while(1)
     {
-        if( input_state )
+        if(game_state == GAME_STATE_START)
         {
-            game_state++;
+            // Wait for user input to start the game
+            if(is_button_pressed(BUTTON_GPIO))
+            {
+                game_state = GAME_STATE_PLAYING;
+                render_flag = true;
+            }
         }
-        usleep(500000); // Run at 2Hz, adjust as needed
+        else if(game_state == GAME_STATE_PLAYING)
+        {
+            // Update bird position
+            if(is_button_pressed(BUTTON_GPIO))
+            {
+                move_up(&bird);
+            }
+            else
+            {
+                move_down(&bird);
+            }
+
+            // Update columns
+            update_column(&col_list);
+
+            // Check for collisions
+            if(check_bird_collision(&bird, &col_list) < 0)
+            {
+                game_state = GAME_STATE_GAMEOVER;
+                game_info.score = game_info.points;
+                render_flag = true;
+            }
+
+            // Update score
+            if(game_state == GAME_STATE_PLAYING)
+            {
+                increase_point(&game_info);
+            }
+        }
+        else if(game_state == GAME_STATE_GAMEOVER)
+        {
+            // Handle game over state
+            if(is_button_pressed(BUTTON_GPIO))
+            {
+                init_game(game_velocity);
+                game_state = GAME_STATE_START;
+                render_flag = true;
+            }
+        }
     }
     return NULL;
 }
