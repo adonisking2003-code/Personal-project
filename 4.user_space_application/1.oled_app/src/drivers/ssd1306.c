@@ -26,17 +26,21 @@ unsigned char *test_data[] = {
 
 void print_display_buffer()
 {
-    // for (int i = 0; i < PAGE_NUM; i++) {
-    //     for (int j = 0; j < COL_NUM; j++) {
-    //         // In giá trị theo định dạng hex để dễ nhìn
-    //         printf("0x%02X ", display_buffer[i*j]);
-    //     }
-    //     printf("\n\n\n"); // Xuống dòng sau mỗi page (hàng)
-    // }
-    printf("0x%02X \n", display_buffer[0]);
-    printf("0x%02X \n", display_buffer[1]);
-    printf("0x%02X \n", display_buffer[128]);
-    printf("0x%02X \n", display_buffer[129]);
+    for (int i = 0; i < PAGE_NUM; i++) {
+        for (int j = 0; j < COL_NUM; j++) {
+            if(display_buffer[i * COL_NUM + j] != 0x00)
+            {
+                if(display_buffer[i * COL_NUM + j] <= 0x0F)
+                {
+                    printf("index %d: 0x0%X \n", i*COL_NUM + j, display_buffer[i * COL_NUM + j]);
+                }
+                else
+                {
+                    printf("index %d: 0x%X \n", i*COL_NUM + j, display_buffer[i * COL_NUM + j]);
+                }
+            }
+        }
+    }
 }
 
 void set_brightness(int fd, int level)
@@ -233,18 +237,30 @@ void draw_circle(int fd, uint8_t x, uint8_t y, uint8_t radian, bool fill)
 
 }
 
+uint8_t get_bit_pixel(uint8_t bitmap_byte, uint8_t num_byte_want)
+{
+    return bitmap_byte >> ( 8 - num_byte_want);
+}
+
 void draw_bit_map(int fd, uint8_t x, uint8_t y, unsigned char* bitmap, uint8_t width, uint8_t height, bool color)
 {
-    // uint8_t byteWidth = (width + 7) / 8; // Number of byte each row bitmap
+    // Check boundary
+    if(x + width > SCREEN_WIDTH || y + height > SCREEN_HEIGHT || 
+        x < 0 || y < 0 || x >= SCREEN_WIDTH || y >= SCREEN_HEIGHT)
+    {
+        return;
+    }
+
     uint8_t bit_mask = 0x01;
     uint8_t bit_on = 0x00;
     for(uint8_t j=y; j<y+height; j++)
     {
         for(uint8_t i = x; i<x+width; i++)
         {
-            uint16_t byteIndex = (j/8) * width + i - x;
-            bit_on =  bit_mask << (j%8);
-            if(bitmap[byteIndex] & bit_on)
+            uint16_t byteIndex = ( (j - y) /8) * width + i - x;
+            bit_on =  bit_mask << ((j)%8);
+            if(bitmap[byteIndex]<<(y%8) & bit_on)
+            // if((bitmap[byteIndex]<<(y%8) | get_bit_pixel(bitmap[byteIndex - width], y)) & bit_on)
             {
                 draw_pixel(i, j, bit_on);
             }
