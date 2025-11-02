@@ -69,6 +69,7 @@ int main()
     draw_bit_map(fd, 0, 0, number_0, 10, 16, true);
     draw_bit_map(fd, 0, 16, number_0, 10, 16, true);
     draw_bit_map(fd, 15, 3, number_0, 10, 16, true);
+    draw_bit_map(fd, 15, 19, number_0, 10, 16, true);
     print_display_buffer();
     // draw_bit_map(fd, 15, 16, number_1, 10, 16, true);
     update_oled_display(fd);

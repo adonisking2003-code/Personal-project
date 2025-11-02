@@ -253,7 +253,7 @@ void draw_bit_map(int fd, uint8_t x, uint8_t y, unsigned char* bitmap, uint8_t w
 
     uint8_t bit_mask = 0x01;
     uint8_t bit_on = 0x00;
-    uint8_t bounded = (y%8 == 0) ? y : 0;
+    uint8_t bounded = (y%8 == 0) ? y : y-y%8;
     for(uint8_t j=y; j<y+height; j++)
     {
         for(uint8_t i = x; i<x+width; i++)
