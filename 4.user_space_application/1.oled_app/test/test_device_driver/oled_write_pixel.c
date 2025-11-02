@@ -38,31 +38,39 @@ int main()
         user_char_F, user_char_G, user_char_H, user_char_I, user_char_J,
         user_char_K, user_char_L, user_char_M, user_char_N, user_char_O,
         user_char_P, user_char_Q, user_char_R, user_char_S, user_char_T,
-        user_char_U, user_char_V, user_char_W, user_char_X, user_char_Y,
-        user_char_Z, user_char_space, user_char_colon, user_char_dot,
+        user_char_U, user_char_V, user_char_space, user_char_colon, user_char_dot,
         user_char_minus, user_char_exclamation, user_char_comma
     };
-    int x = 0, y = 0;
+    int x = 0, y = 3;
     // for(int i = 0; i < sizeof(test_data)/sizeof(test_data[0]); i++) {
-    for(int i = 36; i < 42; i++) {
-        if(test_data[i] == user_char_space || test_data[i] == user_char_colon ||
-           test_data[i] == user_char_dot || test_data[i] == user_char_minus ||
-           test_data[i] == user_char_exclamation || test_data[i] == user_char_comma) 
-        {
-            draw_bit_map(fd, x, y, &test_data[i][0], 2, 16, true);
-        }
-        else {
-            draw_bit_map(fd, x, y, &test_data[i][0], 10, 16, true);
-        }
-        x += 10;
-        if (x >= 128) {
-            x = 0;
-            y += 16;
-        }
-        if (y >= 64) {
-            break;
-        }
-    }
+    // // for(int i = 0; i < 13; i++) {
+    //     if(test_data[i] == user_char_space || test_data[i] == user_char_colon ||
+    //        test_data[i] == user_char_dot || test_data[i] == user_char_minus ||
+    //        test_data[i] == user_char_exclamation || test_data[i] == user_char_comma) 
+    //     {
+    //         draw_bit_map(fd, x, y, &test_data[i][0], 2, 16, true);
+    //     }
+    //     else 
+    //     {
+    //         draw_bit_map(fd, x, y, &test_data[i][0], 10, 16, true);
+    //     }
+    //     x += 10;
+    //     if (x + 10 > 128) 
+    //     {
+    //         x = 0;
+    //         y += 16;
+    //     }
+    //     if (y + 16 > 64) 
+    //     {
+    //         break;
+    //     }
+    //     printf("%d - %d : %d \n", i, x, y);
+    // }
+    draw_bit_map(fd, 0, 0, number_0, 10, 16, true);
+    draw_bit_map(fd, 0, 16, number_0, 10, 16, true);
+    draw_bit_map(fd, 15, 3, number_0, 10, 16, true);
+    print_display_buffer();
+    // draw_bit_map(fd, 15, 16, number_1, 10, 16, true);
     update_oled_display(fd);
     delay_ms(5000);
     close(fd);

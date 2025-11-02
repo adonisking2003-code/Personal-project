@@ -239,7 +239,7 @@ void draw_circle(int fd, uint8_t x, uint8_t y, uint8_t radian, bool fill)
 
 uint8_t get_bit_pixel(uint8_t bitmap_byte, uint8_t num_byte_want)
 {
-    return bitmap_byte >> ( 8 - num_byte_want);
+    return bitmap_byte >> ( 8 - num_byte_want%8);
 }
 
 void draw_bit_map(int fd, uint8_t x, uint8_t y, unsigned char* bitmap, uint8_t width, uint8_t height, bool color)
@@ -253,16 +253,43 @@ void draw_bit_map(int fd, uint8_t x, uint8_t y, unsigned char* bitmap, uint8_t w
 
     uint8_t bit_mask = 0x01;
     uint8_t bit_on = 0x00;
+    uint8_t bounded = (y%8 == 0) ? y : 0;
     for(uint8_t j=y; j<y+height; j++)
     {
         for(uint8_t i = x; i<x+width; i++)
         {
-            uint16_t byteIndex = ( (j - y) /8) * width + i - x;
+            // uint16_t byteIndex = ( (j - y) /8) * width + i - x;
+            uint16_t byteIndex = ( (j - bounded) /8) * width + i - x;
             bit_on =  bit_mask << ((j)%8);
-            if(bitmap[byteIndex]<<(y%8) & bit_on)
-            // if((bitmap[byteIndex]<<(y%8) | get_bit_pixel(bitmap[byteIndex - width], y)) & bit_on)
+            printf("i = %d, j = %d, byteIndex: %d, bit_on = 0x%0x \n", i, j, byteIndex, bit_on);
+            // if(bitmap[byteIndex]<<(y%8) & bit_on)
+            if(j < y+height - (y+height)%8) 
             {
-                draw_pixel(i, j, bit_on);
+                // if((bitmap[byteIndex]<<(y%8) | get_bit_pixel(bitmap[byteIndex - width], y)) & bit_on)
+                if(byteIndex - width > 0)
+                {
+                    printf("byteIndex - width = %d \n", byteIndex - width);
+                    if((bitmap[byteIndex]<<(y%8) | get_bit_pixel(bitmap[byteIndex - width], y) ) & bit_on)
+                    {
+                        draw_pixel(i, j, bit_on);
+                    }
+                }
+                else
+                {
+                    if((bitmap[byteIndex]<<(y%8)) & bit_on)
+                    {
+                        draw_pixel(i, j, bit_on);
+                    }
+                }
+                
+            }
+            else 
+            {
+                if(get_bit_pixel(bitmap[byteIndex - width], y) & bit_on)
+                {
+                    draw_pixel(i, j, bit_on);
+                    printf("Draw pixel at i = %d, j = %d \n", i, j);
+                }
             }
         }
     }
