@@ -47,6 +47,10 @@ set(TEST_BUTTON_SOURCES
   ${PROJECT_SOURCE_DIR}/test/test_HAL/test_button.c
 )
 
+set(TEST_APP_SOURCES
+  ${PROJECT_SOURCE_DIR}/test/test_app/test_app_func.c
+)
+
 # Utils source
 set(UTILS_SOURCES
   ${PROJECT_SOURCE_DIR}/src/utils/utils.c
@@ -67,13 +71,6 @@ add_executable(oled_write_pixel
   ${UTILS_SOURCES}
 )
 
-# target_include_directories(oled_write_pixel PRIVATE
-#   ${PROJECT_SOURCE_DIR}/include
-#   ${PROJECT_SOURCE_DIR}/include/drivers
-#   ${PROJECT_SOURCE_DIR}/include/core
-#   ${PROJECT_SOURCE_DIR}/include/utils
-# )
-
 add_executable(test_button
   ${TEST_BUTTON_SOURCES}
   ${CORE_SOURCES}
@@ -81,7 +78,15 @@ add_executable(test_button
   ${UTILS_SOURCES}
 )
 
+add_executable(test_app
+  ${TEST_APP_SOURCES}
+  ${CORE_SOURCES}
+  ${DRIVER_SOURCES}
+  ${UTILS_SOURCES}
+)
+
 target_link_libraries(test_button PRIVATE Threads::Threads)
+target_link_libraries(test_app PRIVATE Threads::Threads)
 
 # Link any required libraries here if needed (e.g., pthread)
 # target_link_libraries(ssd1306_app pthread)

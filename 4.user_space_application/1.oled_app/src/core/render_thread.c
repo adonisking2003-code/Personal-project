@@ -10,7 +10,7 @@
 extern eGameState game_state;
 extern bool render_flag;
 extern struct stBirdInfo bird;
-extern struct stColumnList col_list;
+extern struct stColumnInfo col_info;
 extern struct stGameInfo game_info;
 
 void *render_thread_func(void *arg)
@@ -30,8 +30,10 @@ void *render_thread_func(void *arg)
             {
                 oled_clear_display(fd);
                 draw_bird(fd, &bird);
-                draw_column(fd, &col_list);
+                draw_column(fd, &col_info);
+                draw_score(fd, game_info.points);
                 update_oled_display(fd);
+                update_game_play(fd);
             }
 
             else if(game_state == GAME_STATE_OVER)
@@ -46,14 +48,25 @@ void *render_thread_func(void *arg)
     return NULL;
 }
 
-void draw_column(int fd, struct stColumnList *col_list)
+void draw_column(int fd, struct stColumnInfo *col_info)
 {
-
+    uint8_t column_width  = 20;
+    uint8_t column_height = col_info->column_bottom_y - col_info->column_top_y;
+    // If it error, create function crop array to exactly resolution
+    // stColumnInfo column_bitmap_new = crop_bitmap(column_bitmap, column_width, column_height);
+    draw_bit_map(fd, col_info->x - column_width, col_info->y - column_height, &column_bitmap[0], column_width, column_height, true);
 }
 
 void draw_bird(int fd, struct stBirdInfo *bird)
 {
-    draw_bit_map(fd, bird->bird_x, bird->bird_y, &flappyBirdBitmap[0], 50, 50, true);
+    draw_bit_map(fd, bird->bird_x, bird->bird_y, &flappyBird_bitmap[0], 50, 50, true);
+}
+
+void draw_score(int fd, int score)
+{
+    char score_str[10];
+    snprintf(score_str, sizeof(score_str), "%d", score);
+    oled_print_str(fd, score_str, 0, 0, true);
 }
 
 void start_screen(int fd)

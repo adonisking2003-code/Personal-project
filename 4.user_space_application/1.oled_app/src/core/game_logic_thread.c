@@ -8,11 +8,11 @@
 eGameState game_state = GAME_STATE_READY;
 bool render_flag = false;
 
-struct stBirdInfo bird;
-struct stColumnList col_list;
-struct stGameInfo game_info;
-int column_spacing                  = 30;
-uint8_t game_velocity               = 10;
+struct  stBirdInfo bird;
+struct  stColumnInfo col_info;
+struct  stGameInfo game_info;
+int     column_spacing              = 30;
+uint8_t game_speed                  = 5;    
 
 void *game_logic_thread_func(void *arg)
 {
@@ -60,7 +60,7 @@ void *game_logic_thread_func(void *arg)
             // Handle game over state
             if(button_is_pressed(BUTTON_LINE_OFFSET))
             {
-                init_game(game_velocity);
+                init_game(game_speed);
                 game_state = GAME_STATE_READY;
                 render_flag = true;
             }
@@ -71,12 +71,12 @@ void *game_logic_thread_func(void *arg)
 
 void move_up(struct stBirdInfo *bird)
 {
-	bird->bird_y++;
+	bird->bird_y+=bird_acceleration;
 }
 
 void move_down(struct stBirdInfo *bird)
 {
-	bird->bird_y--;
+	bird->bird_y-=bird_acceleration;
 }
 
 int check_bird_collision(struct stBirdInfo *bird, struct stColumnList *col_list)
@@ -95,15 +95,17 @@ int check_bird_collision(struct stBirdInfo *bird, struct stColumnList *col_list)
     return 0;
 }
 
-void create_column(struct stColumnList *col_list)
+void create_column()
 {
-    
+    // Create a new column and add it to the column list
+    struct stColumnInfo new_column = init_column(100, 20, 20);
+    col_info = new_column;
 }
 
 void update_column(struct stColumnList *col_list)
 {
     // Move column
-
+    col_list->col.column_x -= game_speed;
     // Check if column out then create new column
 
 }
@@ -113,20 +115,21 @@ void increase_point(struct stGameInfo *game_point)
     game_point->points++;
 }
 
-stBirdInfo init_bird(struct stBirdInfo *bird, uint8_t bird_x, uint8_t bird_y, uint8_t bird_h, uint8_t bird_w, uint8_t bird_accel)
+stBirdInfo init_bird(uint8_t bird_x, uint8_t bird_y, uint8_t bird_h, uint8_t bird_w, uint8_t bird_accel)
 {
-    bird->bird_x = 10;
-    bird->bird_y = 30;
-    bird->bird_height = 10;
-    bird->bird_width = 15;
-    bird->bird_acceleration = 5;
+    stBirdInfo bird;
+    bird.bird_x = bird_x;
+    bird.bird_y = bird_y;
+    bird.bird_height = bird_h;
+    bird.bird_width = bird_w;
+    bird.bird_acceleration = bird_accel;
+    return bird;
 }
 
-void init_column(struct stColumnList *stColLst)
+static stColumnInfo init_column(uint8_t column_x, uint8_t column_top_y, uint8_t column_bottom_y)
 {
-    stColumnInfo column = {.column_x=100, .column_top_y = 20, .column_bottom_y = 20};
-    stColLst->col = column;
-    stColLst->next_column = NULL;
+    stColumnInfo column = {.column_x=column_x, .column_top_y = column_top_y, .column_bottom_y = column_bottom_y};
+    return column;
 }
 
 void init_game_info(struct stGameInfo *game_info)
@@ -136,14 +139,24 @@ void init_game_info(struct stGameInfo *game_info)
     game_info->time_play = 0;
 }
 
-void init_game(uint8_t game_vel)
+void init_game(uint8_t game_speed)
 {
     // Init bird
-    // init_bird(&bird);
+    bird = init_bird(10, 30, 10, 15, 5);
 
     // Init column
-    // init_column(&col_list);
+    col_info = init_column(100, 20, 20);
 
     // Init game status
-    // init_game_info(&game_info);
+    init_game_info(&game_info);
+}
+
+void update_game_play(int fd)
+{
+    // Update game play status if needed
+    if(game_state == GAME_STATE_PLAYING)
+    {
+        // e.g., increase time played
+        game_info.time_play++;
+    }
 }

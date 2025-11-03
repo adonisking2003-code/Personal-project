@@ -19,12 +19,7 @@ void *thread_read_button(void* arg)
 
 void *input_thread_func(void *arg)
 {
-    while(1)
-    {
-        // Poll or wait for input (e.g., read buttons)
-        sleep(2);
-    }
-    return NULL;
+    initial_input_thread(BUTTON_LINE_OFFSET);
 }
 
 int initial_input_thread(int button_gpio)

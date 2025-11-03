@@ -55,6 +55,6 @@ void update_column(struct stColumnList *col_list);
 void increase_point(struct stGameInfo *game_point);
 
 stBirdInfo init_bird(struct stBirdInfo *bird, uint8_t bird_x, uint8_t bird_y, uint8_t bird_h, uint8_t bird_w, uint8_t bird_accel);
-void init_game(uint8_t game_vel);
-
-#endif // GAME_LOGIC_THEAD_H
+void init_game(uint8_t game_speed);
+void update_game_play(int fd);
+#endif // GAME_LOGIC_THREAD_H

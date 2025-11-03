@@ -23,7 +23,7 @@ void app_run(void)
         printf("SSD1306 initialize failed\n ");
         return;
     }
-
+    init_game(5);
     pthread_create(&input_thread, NULL, input_thread_func, (void*)fd);
     pthread_create(&logic_thread, NULL, game_logic_thread_func, (void*)fd);
     pthread_create(&render_thread, NULL, render_thread_func, (void*)fd);
