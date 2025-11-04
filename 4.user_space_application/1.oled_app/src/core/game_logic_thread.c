@@ -40,10 +40,10 @@ void *game_logic_thread_func(void *arg)
             }
 
             // Update columns
-            update_column(&col_list);
+            update_column(&col_info);
 
             // Check for collisions
-            if(check_bird_collision(&bird, &col_list) < 0)
+            if(check_bird_collision(&bird, &col_info) < 0)
             {
                 game_state = GAME_STATE_OVER;
                 render_flag = true;
@@ -71,28 +71,34 @@ void *game_logic_thread_func(void *arg)
 
 void move_up(struct stBirdInfo *bird)
 {
-	bird->bird_y+=bird_acceleration;
+	// bird->bird_y+=bird_acceleration;
 }
 
 void move_down(struct stBirdInfo *bird)
 {
-	bird->bird_y-=bird_acceleration;
+	// bird->bird_y-=bird_acceleration;
 }
 
-int check_bird_collision(struct stBirdInfo *bird, struct stColumnList *col_list)
+int check_bird_collision(struct stBirdInfo *bird, struct stColumnInfo *col_info)
 {
-    while(col_list != NULL)
-    {
-        if(bird->bird_x == col_list->col.column_x)
-        {
-            if(bird->bird_y > col_list->col.column_bottom_y && bird->bird_y < col_list->col.column_top_y)
-            {
-                return -1;
-            }
-        }
-        col_list = col_list->next_column;
-    }
+    // while(col_list != NULL)
+    // {
+    //     if(bird->bird_x == col_list->col.column_x)
+    //     {
+    //         if(bird->bird_y > col_list->col.column_bottom_y && bird->bird_y < col_list->col.column_top_y)
+    //         {
+    //             return -1;
+    //         }
+    //     }
+    //     col_list = col_list->next_column;
+    // }
     return 0;
+}
+
+static stColumnInfo init_column(uint8_t column_x, uint8_t column_top_y, uint8_t column_bottom_y)
+{
+    stColumnInfo column = {.column_x=column_x, .column_top_y = column_top_y, .column_bottom_y = column_bottom_y};
+    return column;
 }
 
 void create_column()
@@ -102,10 +108,11 @@ void create_column()
     col_info = new_column;
 }
 
-void update_column(struct stColumnList *col_list)
+void update_column(struct stColumnInfo *col_info)
 {
     // Move column
-    col_list->col.column_x -= game_speed;
+    // col_list->col.column_x -= game_speed;
+    col_info->column_x -= game_speed;
     // Check if column out then create new column
 
 }
@@ -124,12 +131,6 @@ stBirdInfo init_bird(uint8_t bird_x, uint8_t bird_y, uint8_t bird_h, uint8_t bir
     bird.bird_width = bird_w;
     bird.bird_acceleration = bird_accel;
     return bird;
-}
-
-static stColumnInfo init_column(uint8_t column_x, uint8_t column_top_y, uint8_t column_bottom_y)
-{
-    stColumnInfo column = {.column_x=column_x, .column_top_y = column_top_y, .column_bottom_y = column_bottom_y};
-    return column;
 }
 
 void init_game_info(struct stGameInfo *game_info)

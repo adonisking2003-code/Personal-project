@@ -47,14 +47,14 @@ void *game_logic_thread_func(void *arg);
 
 void move_up(struct stBirdInfo *bird);
 void move_down(struct stBirdInfo *bird);
-int check_bird_collision(struct stBirdInfo *bird, struct stColumnList *col_list);
+int check_bird_collision(struct stBirdInfo *bird, struct stColumnInfo *col_info);
 
 void create_column();
-void update_column(struct stColumnList *col_list);
+void update_column(struct stColumnInfo *col_info);
 
 void increase_point(struct stGameInfo *game_point);
 
-stBirdInfo init_bird(struct stBirdInfo *bird, uint8_t bird_x, uint8_t bird_y, uint8_t bird_h, uint8_t bird_w, uint8_t bird_accel);
+stBirdInfo init_bird(uint8_t bird_x, uint8_t bird_y, uint8_t bird_h, uint8_t bird_w, uint8_t bird_accel);
 void init_game(uint8_t game_speed);
 void update_game_play(int fd);
 #endif // GAME_LOGIC_THREAD_H

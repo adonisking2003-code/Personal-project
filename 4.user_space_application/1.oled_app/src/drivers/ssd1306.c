@@ -261,14 +261,14 @@ void draw_bit_map(int fd, uint8_t x, uint8_t y, unsigned char* bitmap, uint8_t w
             // uint16_t byteIndex = ( (j - y) /8) * width + i - x;
             uint16_t byteIndex = ( (j - bounded) /8) * width + i - x;
             bit_on =  bit_mask << ((j)%8);
-            printf("i = %d, j = %d, byteIndex: %d, bit_on = 0x%0x \n", i, j, byteIndex, bit_on);
+            // printf("i = %d, j = %d, byteIndex: %d, bit_on = 0x%0x \n", i, j, byteIndex, bit_on);
             // if(bitmap[byteIndex]<<(y%8) & bit_on)
             if(j < y+height - (y+height)%8) 
             {
                 // if((bitmap[byteIndex]<<(y%8) | get_bit_pixel(bitmap[byteIndex - width], y)) & bit_on)
                 if(byteIndex - width > 0)
                 {
-                    printf("byteIndex - width = %d \n", byteIndex - width);
+                    // printf("byteIndex - width = %d \n", byteIndex - width);
                     if((bitmap[byteIndex]<<(y%8) | get_bit_pixel(bitmap[byteIndex - width], y) ) & bit_on)
                     {
                         draw_pixel(i, j, bit_on);
@@ -288,7 +288,7 @@ void draw_bit_map(int fd, uint8_t x, uint8_t y, unsigned char* bitmap, uint8_t w
                 if(get_bit_pixel(bitmap[byteIndex - width], y) & bit_on)
                 {
                     draw_pixel(i, j, bit_on);
-                    printf("Draw pixel at i = %d, j = %d \n", i, j);
+                    // printf("Draw pixel at i = %d, j = %d \n", i, j);
                 }
             }
         }
