@@ -143,28 +143,42 @@ void ssd1306_close(int fd)
     }
 }
 
-//Need to check
+unsigned char* scale_bitmap_array(const unsigned char* old_buffer, uint8_t old_width, uint8_t old_height, uint8_t new_width, uint8_t new_height)
+{
+    unsigned char* new_buffer = (unsigned char*)malloc((new_width * new_height) / 8);
+    if(new_buffer == NULL)
+    {
+        perror("[ERROR]: malloc new display buffer failed");
+        return NULL;
+    }
+    memset(new_buffer, 0, (new_width * new_height) / 8);
+
+    // Use nearest neighbor scaling
+    // for(uint8_t new_y = 0; new_y < new_height; new_y++)
+    // {
+    //     for(uint8_t new_x = 0; new_x < new_width; new_x++)
+    //     {
+    //         uint8_t old_x = new_x * old_width / new_width;
+    //         uint8_t old_y = new_y * old_height / new_height;
+    //         new_buffer[new_y * new_width / 8 + new_x / 8] |= (old_buffer[old_y * old_width / 8 + old_x / 8] & (0x80 >> (old_x % 8))) ? (0x80 >> (new_x % 8)) : 0;
+    //     }
+    // }
+
+    return new_buffer;
+}
 
 void draw_pixel(uint8_t x, uint8_t y, uint8_t bit_mask) 
 {
     uint8_t page = y/8;
     display_buffer[page*128 + x] |= bit_mask; 	// Ghi pixel vào buffer
 }
-// Ví dụ: Vẽ cột cao 5 pixels từ y = 0 đến y = 4 tại x = 10
-
-// for (uint8_t y = 0; y < 5; y++) {
-//     draw_pixel(10, y);
-// }
-
-// Xóa pixels:
 
 void delete_pixel(int fd, uint8_t x, uint8_t y)
 {
     uint8_t page = y / 8; 					// Xác định page chứa pixel 
     uint8_t bit_mask = 1 << (y % 8); 		// Tạo mask để bật đúng bit trong byte
-    display_buffer[page * x + x] &= ~bit_mask;
+    display_buffer[page * 128 + x] &= ~bit_mask;
 }
-// display_buffer[page][x] &= ~bit_mask;
 
 void draw_line(int fd, uint8_t x, uint8_t y, uint8_t x_end, uint8_t y_end, uint8_t thin)
 {
@@ -229,7 +243,22 @@ void draw_line(int fd, uint8_t x, uint8_t y, uint8_t x_end, uint8_t y_end, uint8
 
 void draw_rectangle(int fd, uint8_t x, uint8_t y, uint8_t width, uint8_t height, bool fill)
 {
-	
+    if (fill) {
+        for (uint8_t i = x; i < x + width; i++) {
+            for (uint8_t j = y; j < y + height; j++) {
+                draw_pixel(i, j, 0x1);
+            }
+        }
+    } else {
+        // Vẽ cạnh trên
+        draw_line(fd, x, y, x + width - 1, y, 1);
+        // Vẽ cạnh dưới
+        draw_line(fd, x, y + height - 1, x + width - 1, y + height - 1, 1);
+        // Vẽ cạnh trái
+        draw_line(fd, x, y, x, y + height - 1, 1);
+        // Vẽ cạnh phải
+        draw_line(fd, x + width - 1, y, x + width - 1, y + height - 1, 1);
+    }
 }
 
 void draw_circle(int fd, uint8_t x, uint8_t y, uint8_t radian, bool fill)

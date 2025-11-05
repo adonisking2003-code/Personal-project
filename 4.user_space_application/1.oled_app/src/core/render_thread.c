@@ -54,12 +54,13 @@ void draw_column(int fd, struct stColumnInfo *col_info)
     uint8_t column_height = col_info->column_bottom_y - col_info->column_top_y;
     // If it error, create function crop array to exactly resolution
     // stColumnInfo column_bitmap_new = crop_bitmap(column_bitmap, column_width, column_height);
-    draw_bit_map(fd, col_info->column_x - column_width, col_info->column_top_y, &column_bitmap[0], column_width, column_height, true);
+    // draw_bit_map(fd, col_info->column_x - column_width, col_info->column_top_y, &column_bitmap[0], column_width, column_height, true);
+    draw_bit_map(fd, 30, 64-16, &column_simple[0], 10, 16, true); // Test draw column
 }
 
 void draw_bird(int fd, struct stBirdInfo *bird)
 {
-    draw_bit_map(fd, bird->bird_x, bird->bird_y, &flappyBird_bitmap[0], 50, 50, true);
+    draw_bit_map(fd, bird->bird_x, bird->bird_y, &flappyBird_bitmap[0], 10, 15, true);
 }
 
 void draw_score(int fd, int score)

@@ -22,6 +22,13 @@
 
 #define OLED_DEVICE_FILE "/dev/etx_oled"
 
+/* Struct definition */
+typedef struct {
+    unsigned char* bitmap;
+    uint8_t width;
+    uint8_t height;
+} stBitmap;
+
 void set_brightness(int fd, int level);
 void set_rotation(int fd, int rotation);
 void oled_clear_display(int fd);
@@ -29,6 +36,7 @@ void set_display_mode(int fd, int mode);
 uint8_t read_display_buffer(int fd, uint8_t *buffer, size_t size);
 uint8_t write_display_buffer(int fd, uint8_t *buffer, size_t size);
 
+unsigned char* scale_bitmap_array(const unsigned char* old_buffer, uint8_t old_width, uint8_t old_height, uint8_t new_width, uint8_t new_height);
 void draw_pixel(uint8_t x, uint8_t y, uint8_t bit_mask);
 void delete_pixel(int fd, uint8_t x, uint8_t y);
 void draw_line(int fd, uint8_t x, uint8_t y, uint8_t x_end, uint8_t y_end, uint8_t thin);
