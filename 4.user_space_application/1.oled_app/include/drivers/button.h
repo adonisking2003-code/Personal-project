@@ -3,9 +3,13 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include <pthread.h>
 
 #define GPIO_CHIP           "/dev/gpiochip0"
 #define BUTTON_LINE_OFFSET  20
+
+/* Mutex create */
+extern pthread_mutex_t mutex_button;
 
 typedef struct stButtonInfo {
     bool pressed;

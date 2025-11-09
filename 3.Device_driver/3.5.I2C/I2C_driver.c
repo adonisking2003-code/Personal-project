@@ -224,26 +224,26 @@ static long etx_oled_ioctl(struct file *file, unsigned int cmd, unsigned long ar
     return 0;
 }
 
-static ssize_t etx_oled_read(struct file *file, char __user *buf, size_t count, loff_t *ppos)
-{
-    // ssise_t ret;
-    // size_t bytes_to_read;
+// static ssize_t etx_oled_read(struct file *file, char __user *buf, size_t count, loff_t *ppos)
+// {
+//     ssise_t ret;
+//     size_t bytes_to_read;
 
-    // if(*ppos >= BUFFER_SIZE)
-    //     return 0; //EOF
+//     if(*ppos >= BUFFER_SIZE)
+//         return 0; //EOF
     
-    // bytes_to_read = min(count, (size_t)(BUFFER_SIZE - *ppos));
+//     bytes_to_read = min(count, (size_t)(BUFFER_SIZE - *ppos));
 
-    // if(copy_to_user(buf, display_buffer + *ppos, bytes_to_read))
-    //     return -EFAULT;
+//     if(copy_to_user(buf, display_buffer + *ppos, bytes_to_read))
+//         return -EFAULT;
 
-    // *ppos += bytes_to_read;
-    // ret = bytes_to_read;
+//     *ppos += bytes_to_read;
+//     ret = bytes_to_read;
 
-    printk(KERN_INFO  "Read function!\n");
+//     printk(KERN_INFO  "Read function!\n");
 
-    return 0;
-}
+//     return 0;
+// }
 
 void print_display_buffer(uint8_t *buffer, size_t size)
 {
@@ -289,7 +289,7 @@ static ssize_t etx_oled_write(struct file *file, const char __user *buf, size_t 
 static const struct file_operations etx_oled_fops = {
     .owner          = THIS_MODULE,
     .unlocked_ioctl = etx_oled_ioctl,
-    .read           = etx_oled_read,
+    // .read           = etx_oled_read,
     .write          = etx_oled_write,
 };
 

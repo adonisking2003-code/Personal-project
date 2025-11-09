@@ -4,30 +4,40 @@
 #include <unistd.h>
 #include "game_logic_thread.h"
 #include "button.h"
+#include "utils.h"
+
+/* mutex declaration */
+pthread_mutex_t mutex_game_logic = PTHREAD_MUTEX_INITIALIZER;
 
 eGameState game_state = GAME_STATE_READY;
 bool render_flag = false;
 
 struct  stBirdInfo bird;
-struct  stColumnInfo col_info;
+struct  stColumnInfo col_bottom_info;
+struct  stColumnInfo col_top_info;
 struct  stGameInfo game_info;
 int     column_spacing              = 30;
 uint8_t game_speed                  = 5;    
 
 void *game_logic_thread_func(void *arg)
 {
+    PRINTF_INFO("Game logic thread started!\n");
+    bool render_flag_local;
+    uint8_t game_state_local = -1;
     while(1)
     {
-        if(game_state == GAME_STATE_READY)
+        get_render_flag_and_state(&render_flag_local, &game_state_local);
+        if(game_state_local == GAME_STATE_READY)
         {
             // Wait for user input to start the game
             if(button_is_pressed(BUTTON_LINE_OFFSET))
             {
-                game_state = GAME_STATE_PLAYING;
-                render_flag = true;
+                PRINTF_INFO("Game started by button press!\n");
+                game_state_local = GAME_STATE_PLAYING;
+                render_flag_local = true;
             }
         }
-        else if(game_state == GAME_STATE_PLAYING)
+        else if(game_state_local == GAME_STATE_PLAYING)
         {
             // Update bird position
             if(button_is_pressed(BUTTON_LINE_OFFSET))
@@ -40,58 +50,64 @@ void *game_logic_thread_func(void *arg)
             }
 
             // Update columns
-            update_column(&col_info);
+            update_column(&col_top_info);
+            update_column(&col_bottom_info);
 
             // Check for collisions
-            if(check_bird_collision(&bird, &col_info) < 0)
+            if(check_bird_collision(&bird, &col_bottom_info) < 0 ||
+               check_bird_collision(&bird, &col_top_info) < 0)
             {
-                game_state = GAME_STATE_OVER;
-                render_flag = true;
+                game_state_local = GAME_STATE_OVER;
+                render_flag_local = true;
             }
 
             // Update score
-            if(game_state == GAME_STATE_PLAYING)
+            if(game_state_local == GAME_STATE_PLAYING)
             {
                 increase_point(&game_info);
             }
         }
-        else if(game_state == GAME_STATE_OVER)
+        else if(game_state_local == GAME_STATE_OVER)
         {
             // Handle game over state
             if(button_is_pressed(BUTTON_LINE_OFFSET))
             {
                 init_game(game_speed);
-                game_state = GAME_STATE_READY;
-                render_flag = true;
+                game_state_local = GAME_STATE_READY;
+                render_flag_local = true;
             }
         }
+        set_game_state_and_render_flag(game_state_local, render_flag_local);
+        delay_ms(100);
     }
     return NULL;
 }
 
 void move_up(struct stBirdInfo *bird)
 {
-	// bird->bird_y+=bird_acceleration;
+	bird->bird_y+=bird->bird_acceleration;
 }
 
 void move_down(struct stBirdInfo *bird)
 {
-	// bird->bird_y-=bird_acceleration;
+	bird->bird_y-=bird->bird_acceleration;
 }
 
-int check_bird_collision(struct stBirdInfo *bird, struct stColumnInfo *col_info)
+int check_bird_collision(struct stBirdInfo *bird, struct stColumnInfo *col_bottom_info)
 {
-    // while(col_list != NULL)
-    // {
-    //     if(bird->bird_x == col_list->col.column_x)
-    //     {
-    //         if(bird->bird_y > col_list->col.column_bottom_y && bird->bird_y < col_list->col.column_top_y)
-    //         {
-    //             return -1;
-    //         }
-    //     }
-    //     col_list = col_list->next_column;
-    // }
+    if(bird == NULL || col_bottom_info == NULL)
+    {
+        return -1;
+    }
+    if( (bird->bird_x + bird->bird_width >= col_bottom_info->column_x))
+    {
+        // Check Y overlap
+        if((bird->bird_y + bird->bird_height >= col_bottom_info->column_top_y && bird->bird_y + bird->bird_height <= col_bottom_info->column_bottom_y) ||
+              (bird->bird_y <= col_bottom_info->column_bottom_y && bird->bird_y >= col_bottom_info->column_top_y) )
+        {
+            return 1; // Collision detected
+        }
+    }
     return 0;
 }
 
@@ -104,8 +120,10 @@ static stColumnInfo init_column(uint8_t column_x, uint8_t column_top_y, uint8_t 
 void create_column()
 {
     // Create a new column and add it to the column list
-    struct stColumnInfo new_column = init_column(100, 20, 20);
-    col_info = new_column;
+    struct stColumnInfo new_top_column = init_column(100, 0, 20);
+    struct stColumnInfo new_bottom_column = init_column(100, 44, 64);
+    col_bottom_info = new_top_column;
+    col_bottom_info = new_bottom_column;
 }
 
 void update_column(struct stColumnInfo *col_info)
@@ -142,14 +160,17 @@ void init_game_info(struct stGameInfo *game_info)
 
 void init_game(uint8_t game_speed)
 {
+    PRINTF_INFO("Initialize game with speed: %d\n", game_speed);
     // Init bird
     bird = init_bird(10, 30, 10, 15, 5);
 
     // Init column
-    col_info = init_column(100, 20, 20);
+    col_top_info = init_column(100, 0, 20);
+    col_bottom_info = init_column(100, 44, 64);
 
     // Init game status
     init_game_info(&game_info);
+    PRINTF_INFO("Game initialized successfully!\n");
 }
 
 void update_game_play(int fd)
@@ -160,4 +181,19 @@ void update_game_play(int fd)
         // e.g., increase time played
         game_info.time_play++;
     }
+}
+
+void get_render_flag_and_state(bool *flag, uint8_t *state) {
+    pthread_mutex_lock(&mutex_game_logic);
+    *flag = render_flag;
+    *state = game_state;
+    pthread_mutex_unlock(&mutex_game_logic);
+}
+
+void set_game_state_and_render_flag(uint8_t new_state, bool flag) {
+    // Lock mutex if multithreaded environment
+    pthread_mutex_lock(&mutex_game_logic);
+    game_state = new_state;
+    render_flag = flag;
+    pthread_mutex_unlock(&mutex_game_logic);
 }

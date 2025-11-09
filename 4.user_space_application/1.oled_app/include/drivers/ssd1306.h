@@ -20,7 +20,7 @@
 #define SCREEN_WIDTH    128
 #define SCREEN_HEIGHT   64
 
-#define OLED_DEVICE_FILE "/dev/etx_oled"
+#define OLED_DEVICE_FILE "/dev/etx_oled_device"
 
 /* Struct definition */
 typedef struct {
@@ -40,7 +40,7 @@ unsigned char* scale_bitmap_array(const unsigned char* old_buffer, uint8_t old_w
 void draw_pixel(uint8_t x, uint8_t y, uint8_t bit_mask);
 void delete_pixel(int fd, uint8_t x, uint8_t y);
 void draw_line(int fd, uint8_t x, uint8_t y, uint8_t x_end, uint8_t y_end, uint8_t thin);
-void draw_rectangle(int fd, uint8_t x, uint8_t y, uint8_t width, uint8_t height, bool fill);
+void draw_rectangle(int fd, uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint8_t thick, bool fill);
 void draw_circle(int fd, uint8_t x, uint8_t y, uint8_t radian, bool fill);
 
 void setCursor(int fd, uint8_t x, uint8_t y);

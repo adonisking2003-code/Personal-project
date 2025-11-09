@@ -31,47 +31,11 @@ int main()
     update_oled_display(fd);
     delay_ms(2000);
     // Test all characters
-    unsigned char *test_data[] = {
-        number_0, number_1, number_2, number_3, number_4,
-        number_5, number_6, number_7, number_8, number_9,
-        user_char_A, user_char_B, user_char_C, user_char_D, user_char_E,
-        user_char_F, user_char_G, user_char_H, user_char_I, user_char_J,
-        user_char_K, user_char_L, user_char_M, user_char_N, user_char_O,
-        user_char_P, user_char_Q, user_char_R, user_char_S, user_char_T,
-        user_char_U, user_char_V, user_char_space, user_char_colon, user_char_dot,
-        user_char_minus, user_char_exclamation, user_char_comma
-    };
-    int x = 0, y = 3;
-    // for(int i = 0; i < sizeof(test_data)/sizeof(test_data[0]); i++) {
-    // // for(int i = 0; i < 13; i++) {
-    //     if(test_data[i] == user_char_space || test_data[i] == user_char_colon ||
-    //        test_data[i] == user_char_dot || test_data[i] == user_char_minus ||
-    //        test_data[i] == user_char_exclamation || test_data[i] == user_char_comma) 
-    //     {
-    //         draw_bit_map(fd, x, y, &test_data[i][0], 2, 16, true);
-    //     }
-    //     else 
-    //     {
-    //         draw_bit_map(fd, x, y, &test_data[i][0], 10, 16, true);
-    //     }
-    //     x += 10;
-    //     if (x + 10 > 128) 
-    //     {
-    //         x = 0;
-    //         y += 16;
-    //     }
-    //     if (y + 16 > 64) 
-    //     {
-    //         break;
-    //     }
-    //     printf("%d - %d : %d \n", i, x, y);
-    // }
-    draw_bit_map(fd, 0, 0, number_0, 10, 16, true);
-    draw_bit_map(fd, 0, 16, number_0, 10, 16, true);
-    draw_bit_map(fd, 15, 3, number_0, 10, 16, true);
-    draw_bit_map(fd, 15, 19, number_0, 10, 16, true);
-    print_display_buffer();
-    // draw_bit_map(fd, 15, 16, number_1, 10, 16, true);
+    for (uint8_t i = 5; i <= 15; i++) {
+        for (uint8_t t = 0; t < 2; t++) {
+            draw_pixel(5 + t, i, 0xFF);
+        }
+    }
     update_oled_display(fd);
     delay_ms(5000);
     close(fd);

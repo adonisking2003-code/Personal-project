@@ -5,10 +5,13 @@
 #include <unistd.h>
 #include <input_thread.h>
 #include <button.h>
-#include <utils.h>
+#include "utils.h"
+
+static uint8_t button_gpio;
 
 void *thread_read_button(void* arg)
 {
+    PRINTF_INFO("Input thread started!\n");
     int*val = (int*)arg;
     while(1)
     {
@@ -22,15 +25,10 @@ void *input_thread_func(void *arg)
     initial_input_thread(BUTTON_LINE_OFFSET);
 }
 
-int initial_input_thread(int button_gpio)
+int initial_input_thread(int button_gpio_input)
 {
+    button_gpio = button_gpio_input;
     pthread_t pid1;
-
-    if ( button_init(button_gpio) < 0)
-    {
-        printf("[ERROR]: Cannot initialize button GPIO %d !\n", button_gpio);
-        return -1;
-    }
 
     if(pthread_create(&pid1, NULL, thread_read_button, &button_gpio) != 0)
     {
@@ -38,6 +36,6 @@ int initial_input_thread(int button_gpio)
         return -1;
     }
 
-    pthread_detach(pid1); // Detach the thread to avoid memory leaks
+    pthread_join(pid1, NULL);
     return 0;
 }

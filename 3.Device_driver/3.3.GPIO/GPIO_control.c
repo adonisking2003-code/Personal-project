@@ -65,7 +65,9 @@ static ssize_t etx_read(struct file *file, char __user *buf, size_t len, loff_t 
         return -EINVAL;
 
     // Reading GPIO value
+
     btn_state = gpiod_get_value(button);
+    pr_info("[INFO]: GPIO_BUTTON Value = %d \n", btn_state);
     
     /* simple single-byte read semantics */
     if (*off > 0)

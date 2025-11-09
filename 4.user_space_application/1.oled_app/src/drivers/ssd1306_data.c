@@ -164,7 +164,7 @@ const unsigned char column_bitmap[] = {
 const unsigned char column_simple[] = {
     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 
     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
-}
+};
 
 // Image people animation walk
 uint32_t people_walk_1[] = {};
@@ -175,13 +175,13 @@ uint32_t people_walk_3[] = {};
 
 uint32_t people_walk_4[] = {};
 
-struct stBitmap st_VietNam = {
+struct stBitmapInfo st_VietNam = {
     128, // Width
     64, // Height
-    (unsigned char *)VietNam_bitmap // Bitmap array
+    (unsigned char *)VietNam_map // Bitmap array
 };
 
-struct stBitmap st_FlappyBird = {
+struct stBitmapInfo st_FlappyBird = {
     15, // Width
     10, // Height
     (unsigned char *)flappyBird_bitmap // Bitmap array

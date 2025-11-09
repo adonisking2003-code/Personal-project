@@ -3,6 +3,10 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <fcntl.h>
+#include "utils.h"
+
+/* mutex declare */
+pthread_mutex_t mutex_button = PTHREAD_MUTEX_INITIALIZER;
 
 static uint8_t btn_state_1 = 0;
 static uint8_t btn_state_2 = 0;
@@ -42,36 +46,40 @@ void button_read_state(int gpio)
 {
     if(btn_fd<0)
     {
-        printf("[DEBUG]: read btn_%d failed - not initial button!\n", gpio);
-
+        PRINTF_DEBUG("read btn_%d failed - not initial button!\n", gpio);
     }
-    // process button debounce 
+    // process button debounce logic
+    pthread_mutex_lock(&mutex_button);
     int read_btn = read(btn_fd, &btn_state_3, 1); // read 1 byte from device
     if(read_btn < 0)
     {
         printf("[DEBUG]: read btn_%d failed, return: %d!\n", gpio, read_btn);
     }
-    printf("[DEBUG]: read btn_%d state: %d!\n", gpio, btn_state_3);
-    if(btn_state_3 == 1)
+    else if(btn_state_3 == 1)
     {
         if(btn_state_1 == btn_state_2 && btn_state_2 == btn_state_3)
         {
+            
             btn_20->pressed = true;
         }
     }
     btn_state_1 = btn_state_2;
     btn_state_2 = btn_state_3;
+    pthread_mutex_unlock(&mutex_button);
 }
 
 int button_is_pressed(int gpio)
 {
     if(!btn_fd) return -1;
 
+    pthread_mutex_lock(&mutex_button);
     if(btn_20->pressed == true)
     {
         btn_20->pressed = false;
+        pthread_mutex_unlock(&mutex_button);
         return 1;
     }
+    pthread_mutex_unlock(&mutex_button);
     return 0;
 }
 

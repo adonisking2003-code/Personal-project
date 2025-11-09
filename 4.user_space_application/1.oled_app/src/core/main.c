@@ -3,6 +3,6 @@
 
 int main()
 {
-    app_run_test();
+    app_run();
     return 0;
 }

@@ -10,6 +10,9 @@
 #define COLUMN_GAP	10	// Khoảng trống cột
 #define COLUMN_WIDTH 5
 
+/* mutex declaration */
+extern pthread_mutex_t mutex_game_logic;
+
 typedef enum {
 	GAME_STATE_READY 	= 0,
 	GAME_STATE_PLAYING,
@@ -57,4 +60,7 @@ void increase_point(struct stGameInfo *game_point);
 stBirdInfo init_bird(uint8_t bird_x, uint8_t bird_y, uint8_t bird_h, uint8_t bird_w, uint8_t bird_accel);
 void init_game(uint8_t game_speed);
 void update_game_play(int fd);
+
+void get_render_flag_and_state(bool *flag, uint8_t *state);
+void set_game_state_and_render_flag(uint8_t new_state, bool flag);
 #endif // GAME_LOGIC_THREAD_H

@@ -8,6 +8,7 @@
 #include <string.h>
 #include "ssd1306_data.h"
 #include "alphabet_font10.h"
+#include "utils.h"
 
 // int i2c_fd = -1;
 bool is_collision;
@@ -103,31 +104,35 @@ int ssd1306_init(void)
         perror("Failed to open i2c device");
         return -1;
     }
+    PRINTF_INFO("SSD1306 i2c device opened successfully\n");
 
     set_brightness(i2c_fd, 200);
 
     oled_clear_display(i2c_fd);
 
-    uint8_t buffer[8][128];
-    for (int i = 0; i < 4; i++) {
+    uint8_t buffer[PAGE_NUM*COL_NUM];
+    for (int i = 0; i < 64; i++) {
         for(int j=0; j<128; j++)
         {
-            buffer[i][j] = 0xFF;
+            buffer[i%8 * 128 + j] = 0xFF;
         }
     }
+    PRINTF_INFO("Write display buffer test data\n");
 
     // if(write_display_buffer(fd, (uint8_t *)buffer, 8*128) == -1)
-    if(write_display_buffer(i2c_fd, &buffer[0][0], 8*128) == -1)
+    if(write_display_buffer(i2c_fd, &buffer[0], 8*128) == -1)
     {
         ssd1306_close(i2c_fd);
+        PRINTF_ERROR("Write display buffer failed\n");
         return 1;
     }
+    PRINTF_INFO("Write display buffer successfully!\n");
 
-    uint8_t read_buf[8*128];
-    if(read_display_buffer(i2c_fd, read_buf, sizeof(read_buf)) > 0)
-    {
-        printf("Read display buffer successfully!\n");
-    }
+    // uint8_t read_buf[8*128];
+    // if(read_display_buffer(i2c_fd, read_buf, sizeof(read_buf)) > 0)
+    // {
+    //     PRINTF_INFO("Read display buffer successfully!\n");
+    // }
 
     oled_clear_display(i2c_fd);
 
@@ -199,14 +204,14 @@ void draw_line(int fd, uint8_t x, uint8_t y, uint8_t x_end, uint8_t y_end, uint8
         // Vẽ đường dọc
         for (uint8_t i = y; i <= y_end; i++) {
             for (uint8_t t = 0; t < thin; t++) {
-                draw_pixel(x + t, i, 0xFF);
+                draw_pixel(x + t, i, 0x1<<((i)%8));
             }
         }
     } else if (y == y_end) {
         // Vẽ đường ngang
         for (uint8_t i = x; i <= x_end; i++) {
             for (uint8_t t = 0; t < thin; t++) {
-                draw_pixel(i, y + t, 0xFF);
+                draw_pixel(i, y + t, 0x1<<((y+t)%8));
             }
         }
     } else {
@@ -241,7 +246,7 @@ void draw_line(int fd, uint8_t x, uint8_t y, uint8_t x_end, uint8_t y_end, uint8
 }
 
 
-void draw_rectangle(int fd, uint8_t x, uint8_t y, uint8_t width, uint8_t height, bool fill)
+void draw_rectangle(int fd, uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint8_t thick, bool fill)
 {
     if (fill) {
         for (uint8_t i = x; i < x + width; i++) {
@@ -251,13 +256,13 @@ void draw_rectangle(int fd, uint8_t x, uint8_t y, uint8_t width, uint8_t height,
         }
     } else {
         // Vẽ cạnh trên
-        draw_line(fd, x, y, x + width - 1, y, 1);
+        draw_line(fd, x, y, x + width - 1, y, thick);
         // Vẽ cạnh dưới
-        draw_line(fd, x, y + height - 1, x + width - 1, y + height - 1, 1);
+        draw_line(fd, x, y + height-thick, x + width - 1, y + height-thick, thick);
         // Vẽ cạnh trái
-        draw_line(fd, x, y, x, y + height - 1, 1);
+        draw_line(fd, x, y, x, y + height - thick, thick);
         // Vẽ cạnh phải
-        draw_line(fd, x + width - 1, y, x + width - 1, y + height - 1, 1);
+        draw_line(fd, x + width - thick, y, x + width-thick, y + height - thick, thick);
     }
 }
 

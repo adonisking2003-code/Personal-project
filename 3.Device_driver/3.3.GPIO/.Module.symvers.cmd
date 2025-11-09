@@ -1,1 +1,0 @@
-savedcmd_/home/adonisking/Learning_Linux/3.Device_driver/3.3.GPIO/Module.symvers :=  scripts/mod/modpost -M -m -a      -o /home/adonisking/Learning_Linux/3.Device_driver/3.3.GPIO/Module.symvers -T /home/adonisking/Learning_Linux/3.Device_driver/3.3.GPIO/modules.order -i Module.symvers -e 

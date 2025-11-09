@@ -10,6 +10,8 @@
 #include "button.h"
 #include "utils.h"
 
+int fd;
+
 void *input_thread_func(void*);
 void *game_logic_thread_func(void*);
 void *render_thread_func(void*);
@@ -17,16 +19,21 @@ void *render_thread_func(void*);
 void app_run(void)
 {
     pthread_t input_thread, logic_thread, render_thread;
-    int fd = ssd1306_init();
+    fd = ssd1306_init();
     if( fd < 0 )
     {
-        printf("SSD1306 initialize failed\n ");
+        PRINTF_ERROR("SSD1306 initialize failed\n ");
         return;
     }
     init_game(5);
-    pthread_create(&input_thread, NULL, input_thread_func, (void*)fd);
-    pthread_create(&logic_thread, NULL, game_logic_thread_func, (void*)fd);
-    pthread_create(&render_thread, NULL, render_thread_func, (void*)fd);
+    if ( button_init(20) < 0) // HARD coded button GPIO 20
+    {
+        printf("[ERROR]: Cannot initialize button GPIO %d !\n", 20);
+        return;
+    }
+    pthread_create(&input_thread, NULL, input_thread_func, NULL);
+    pthread_create(&logic_thread, NULL, game_logic_thread_func, &fd);
+    pthread_create(&render_thread, NULL, render_thread_func, &fd);
 
     pthread_join(input_thread, NULL);
     pthread_join(logic_thread, NULL);

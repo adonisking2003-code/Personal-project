@@ -9,7 +9,7 @@
 #include "/home/adonisking/Learning_Linux/4.user_space_application/1.oled_app/include/drivers/ssd1306.h"
 #include "/home/adonisking/Learning_Linux/4.user_space_application/1.oled_app/include/drivers/button.h"
 
-void *thread_read_button(void* arg)
+void *thread_read_button_test(void* arg)
 {
     int*val = (int*)arg;
     while(1)
@@ -19,7 +19,7 @@ void *thread_read_button(void* arg)
     }
 }
 
-void *thread_check_button(void *arg)
+void *thread_check_button_test(void *arg)
 {
     int *val = (int*)arg;
     while(1)
@@ -45,13 +45,13 @@ int main()
         return -1;
     }
 
-    if(pthread_create(&pid1, NULL, thread_read_button, &btn_gpio) != 0)
+    if(pthread_create(&pid1, NULL, thread_read_button_test, &btn_gpio) != 0)
     {
         perror("[ERROR]: Cannot create thread1!\n");
         return 1;
     }
 
-    if(pthread_create(&pid2, NULL, thread_check_button, &btn_gpio) != 0)
+    if(pthread_create(&pid2, NULL, thread_check_button_test, &btn_gpio) != 0)
     {
         perror("[ERROR]: Cannot create thread2!\n");
         return 1;
