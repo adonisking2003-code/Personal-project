@@ -37,19 +37,21 @@ int button_init(int gpio)
 void button_deinit(int gpio)
 {
     if(gpio == 20 && btn_fd > 0)
+    {
         free(btn_20);
         btn_20 = NULL;
+    }
     close(btn_fd);
 }
 
 void button_read_state(int gpio)
 {
+    // process button debounce logic
+    pthread_mutex_lock(&mutex_button);
     if(btn_fd<0)
     {
         PRINTF_DEBUG("read btn_%d failed - not initial button!\n", gpio);
     }
-    // process button debounce logic
-    pthread_mutex_lock(&mutex_button);
     int read_btn = read(btn_fd, &btn_state_3, 1); // read 1 byte from device
     if(read_btn < 0)
     {
@@ -58,9 +60,10 @@ void button_read_state(int gpio)
     else if(btn_state_3 == 1)
     {
         if(btn_state_1 == btn_state_2 && btn_state_2 == btn_state_3)
-        {
-            
-            btn_20->pressed = true;
+        {      
+            if (btn_20 != NULL) {
+                btn_20->pressed = true;
+            }
         }
     }
     btn_state_1 = btn_state_2;
@@ -70,9 +73,8 @@ void button_read_state(int gpio)
 
 int button_is_pressed(int gpio)
 {
-    if(!btn_fd) return -1;
-
     pthread_mutex_lock(&mutex_button);
+    if(!btn_fd) return -1;
     if(btn_20->pressed == true)
     {
         btn_20->pressed = false;
