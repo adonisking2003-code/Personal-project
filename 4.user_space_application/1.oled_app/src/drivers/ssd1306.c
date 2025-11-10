@@ -493,6 +493,13 @@ unsigned char* get_bit_map(char c, bool *is_special_char, uint8_t* char_width, u
 
 void oled_print_str(int fd, const char *str, uint8_t cursor_x, uint8_t cursor_y, bool color)
 {
+    uint8_t max_string_len = (COL_NUM - cursor_x) / 10;
+    if(str.length() > max_string_len)
+    {
+        PRINTF_INFO("String length over %d, truncate to %d\n", (COL_NUM - cursor_x) / 10, (COL_NUM - cursor_x) / 10);
+        str = str.resize(10);
+    }
+
     uint8_t char_width = 0;
     uint8_t char_height = 0;
     bool is_special_char = false;

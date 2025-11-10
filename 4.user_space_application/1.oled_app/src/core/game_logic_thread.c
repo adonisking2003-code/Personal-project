@@ -131,10 +131,12 @@ void create_column()
 void update_column(struct stColumnInfo *col_info)
 {
     // Move column
-    // col_list->col.column_x -= game_speed;
     col_info->column_x -= game_speed;
     // Check if column out then create new column
-
+    if(col_info->column_x < game_speed)
+    {
+        col_info->column_x = 100;
+    }
 }
 
 void increase_point(struct stGameInfo *game_point)
@@ -164,7 +166,7 @@ void init_game(uint8_t game_speed)
 {
     PRINTF_INFO("Initialize game with speed: %d\n", game_speed);
     // Init bird
-    bird = init_bird(10, 30, 10, 15, 5);
+    bird = init_bird(20, 30, 10, 15, 5);
 
     // Init column
     col_top_info = init_column(100, 0, 20);
