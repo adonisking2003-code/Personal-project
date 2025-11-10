@@ -40,6 +40,7 @@ void *game_logic_thread_func(void *arg)
         else if(game_state_local == GAME_STATE_PLAYING)
         {
             // Update bird position
+            pthread_mutex_lock(&mutex_game_logic);
             if(button_is_pressed(BUTTON_LINE_OFFSET))
             {
                 move_up(&bird);
@@ -66,6 +67,7 @@ void *game_logic_thread_func(void *arg)
             {
                 increase_point(&game_info);
             }
+            pthread_mutex_unlock(&mutex_game_logic);
         }
         else if(game_state_local == GAME_STATE_OVER)
         {

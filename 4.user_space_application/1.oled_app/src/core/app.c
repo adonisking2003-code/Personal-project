@@ -32,7 +32,7 @@ void app_run(void)
         return;
     }
     pthread_create(&input_thread, NULL, input_thread_func, NULL);
-    pthread_create(&logic_thread, NULL, game_logic_thread_func, &fd);
+    pthread_create(&logic_thread, NULL, game_logic_thread_func, NULL);
     pthread_create(&render_thread, NULL, render_thread_func, &fd);
 
     pthread_join(input_thread, NULL);

@@ -34,6 +34,7 @@ void *render_thread_func(void *arg)
 
             else if(game_state_local == GAME_STATE_PLAYING)
             {
+                pthread_mutex_lock(&mutex_game_logic);
                 oled_clear_display(fd);
                 draw_bird(fd, &bird);
                 draw_column(fd, &col_top_info);
@@ -41,6 +42,7 @@ void *render_thread_func(void *arg)
                 draw_score(fd, game_info.points);
                 update_oled_display(fd);
                 update_game_play(fd);
+                pthread_mutex_unlock(&mutex_game_logic);
             }
 
             else if(game_state_local == GAME_STATE_OVER)
