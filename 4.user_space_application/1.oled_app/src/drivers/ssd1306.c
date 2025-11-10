@@ -175,6 +175,13 @@ unsigned char* scale_bitmap_array(const unsigned char* old_buffer, uint8_t old_w
 void draw_pixel(uint8_t x, uint8_t y, uint8_t bit_mask) 
 {
     uint8_t page = y/8;
+    if(page*128 + x > COL_NUM*PAGE_NUM)
+    {
+        PRINTF_ERROR("ERROR INDEX BUFFER!\n");
+        return;
+        // return APP_RET_ERR_INVALID_BUFFER_INDEX;
+    }
+
     display_buffer[page*128 + x] |= bit_mask; 	// Ghi pixel vào buffer
 }
 
@@ -493,21 +500,31 @@ unsigned char* get_bit_map(char c, bool *is_special_char, uint8_t* char_width, u
 
 void oled_print_str(int fd, const char *str, uint8_t cursor_x, uint8_t cursor_y, bool color)
 {
+    if(str == NULL)
+    {
+        PRINTF_ERROR("Str is NULL!\n");
+    }
     uint8_t max_string_len = (COL_NUM - cursor_x) / 10;
-    if(str.length() > max_string_len)
+    char *str_write = malloc(strlen(str) + 1);
+    strcpy(str_write, str);
+    string_to_upper(str_write);
+
+    if(strlen(str_write) > max_string_len)
     {
         PRINTF_INFO("String length over %d, truncate to %d\n", (COL_NUM - cursor_x) / 10, (COL_NUM - cursor_x) / 10);
-        str = str.resize(10);
+        str_write[max_string_len] = '\0';
     }
 
     uint8_t char_width = 0;
     uint8_t char_height = 0;
     bool is_special_char = false;
 
-    while (*str) {
-        char c = *str++;
-
+    char *p = str_write;
+    while (*p) {
+        char c = *p++;
+        is_special_char = false;
         unsigned char *bitmap = get_bit_map(c, &is_special_char, &char_width, &char_height);
+        PRINTF_INFO("c = %c, is_special char = %d, char width = %d \n", c, is_special_char, char_width);
         if(bitmap == NULL) {
             continue; // Bỏ qua ký tự không hợp lệ
         }
@@ -532,4 +549,5 @@ void oled_print_str(int fd, const char *str, uint8_t cursor_x, uint8_t cursor_y,
             break; // Ngắt nếu vượt quá chiều cao màn hình
         }
     }
+    free(str_write);
 }  

@@ -164,7 +164,10 @@ const unsigned char user_char_V[] = {
 
 const unsigned char user_char_W[];
 const unsigned char user_char_X[];
-const unsigned char user_char_Y[];
+const unsigned char user_char_Y[] = {
+  0x00, 0x3F, 0x3F, 0x30, 0xF0, 0xF0, 0x30, 0x3F, 0x3F, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x0F, 0x0F, 0x00, 0x00, 0x00, 0x00,
+};
 const unsigned char user_char_Z[];
 
 const unsigned char user_char_a[];

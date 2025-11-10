@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <utils.h>
+#include <ctype.h> 
+#include <string.h>
 
 /*
     * Purpose: Limits value to be within the range [min, max].
@@ -26,4 +28,10 @@ unsigned int random_unit(unsigned int max)
 void delay_ms(unsigned int milliseconds)
 {
     usleep(milliseconds * 1000);
+}
+
+void string_to_upper(char *str) {
+    for (int i = 0; i < strlen(str); i++) {
+        str[i] = toupper((unsigned char)str[i]);
+    }
 }

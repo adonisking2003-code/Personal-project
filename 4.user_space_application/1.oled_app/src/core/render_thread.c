@@ -29,9 +29,9 @@ void *render_thread_func(void *arg)
         {
             if(game_state_local == GAME_STATE_READY)
             {
+
                 start_screen(fd);
             }
-
             else if(game_state_local == GAME_STATE_PLAYING)
             {
                 pthread_mutex_lock(&mutex_game_logic);
@@ -44,7 +44,6 @@ void *render_thread_func(void *arg)
                 update_game_play(fd);
                 pthread_mutex_unlock(&mutex_game_logic);
             }
-
             else if(game_state_local == GAME_STATE_OVER)
             {
                 end_screen(fd);
@@ -82,8 +81,8 @@ void start_screen(int fd)
     oled_clear_display(fd);
     printf("Start Screen\n");
     draw_rectangle(fd, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 5, false);
-    oled_print_str(fd, "Flappy Bird", 0, 5, true);
-    oled_print_str(fd, "Start!", 39, 25, true);
+    oled_print_str(fd, "FLAPPY BIRD", 10, 10, true);
+    oled_print_str(fd, "Start!", 39, 35, true);
     update_oled_display(fd);
 }
 

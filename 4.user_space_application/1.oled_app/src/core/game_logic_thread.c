@@ -10,7 +10,7 @@
 pthread_mutex_t mutex_game_logic = PTHREAD_MUTEX_INITIALIZER;
 
 eGameState game_state = GAME_STATE_READY;
-bool render_flag = false;
+bool render_flag = true;
 
 struct  stBirdInfo bird;
 struct  stColumnInfo col_bottom_info;
@@ -27,6 +27,7 @@ void *game_logic_thread_func(void *arg)
     while(1)
     {
         get_render_flag_and_state(&render_flag_local, &game_state_local);
+        PRINTF_INFO("game_state_local = %d\n", game_state_local);
         if(game_state_local == GAME_STATE_READY)
         {
             // Wait for user input to start the game
@@ -41,6 +42,7 @@ void *game_logic_thread_func(void *arg)
         {
             // Update bird position
             pthread_mutex_lock(&mutex_game_logic);
+            PRINTF_INFO("Start playing!\n");
             if(button_is_pressed(BUTTON_LINE_OFFSET))
             {
                 move_up(&bird);
@@ -55,29 +57,30 @@ void *game_logic_thread_func(void *arg)
             update_column(&col_bottom_info);
 
             // Check for collisions
-            if(check_bird_collision(&bird, &col_bottom_info) < 0 ||
-               check_bird_collision(&bird, &col_top_info) < 0)
+            if(check_bird_collision(&bird, &col_bottom_info) != 0 ||
+               check_bird_collision(&bird, &col_top_info) != 0)
             {
                 game_state_local = GAME_STATE_OVER;
-                render_flag_local = true;
+                PRINTF_INFO("COLLISION CHECK!\n");
             }
+            render_flag_local = true;
 
             // Update score
-            if(game_state_local == GAME_STATE_PLAYING)
-            {
-                increase_point(&game_info);
-            }
+            // if(game_state_local == GAME_STATE_PLAYING)
+            // {
+            //     increase_point(&game_info);
+            // }
             pthread_mutex_unlock(&mutex_game_logic);
         }
         else if(game_state_local == GAME_STATE_OVER)
         {
             // Handle game over state
-            if(button_is_pressed(BUTTON_LINE_OFFSET))
-            {
-                init_game(game_speed);
-                game_state_local = GAME_STATE_READY;
-                render_flag_local = true;
-            }
+            // if(button_is_pressed(BUTTON_LINE_OFFSET))
+            // {
+            //     init_game(game_speed);
+            //     game_state_local = GAME_STATE_READY;
+            //     render_flag_local = true;
+            // }
         }
         set_game_state_and_render_flag(game_state_local, render_flag_local);
         delay_ms(100);
@@ -87,12 +90,12 @@ void *game_logic_thread_func(void *arg)
 
 void move_up(struct stBirdInfo *bird)
 {
-	bird->bird_y+=bird->bird_acceleration;
+	bird->bird_y-=bird->bird_acceleration;
 }
 
 void move_down(struct stBirdInfo *bird)
 {
-	bird->bird_y-=bird->bird_acceleration;
+	bird->bird_y+=bird->bird_acceleration;
 }
 
 int check_bird_collision(struct stBirdInfo *bird, struct stColumnInfo *col_bottom_info)
