@@ -16,7 +16,7 @@ void *thread_read_button(void* arg)
     while(1)
     {
         button_read_state(*val);
-        delay_ms(100);
+        delay_ms(50);
     }
 }
 
