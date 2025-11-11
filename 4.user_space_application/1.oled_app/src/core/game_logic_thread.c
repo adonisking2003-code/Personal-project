@@ -64,7 +64,6 @@ void *game_logic_thread_func(void *arg)
                 game_state_local = GAME_STATE_OVER;
                 PRINTF_INFO("COLLISION CHECK!\n");
                 stop_count = 10;
- = 10;
             }
             render_flag_local = true;
 
