@@ -209,9 +209,9 @@ void set_game_state_and_render_flag(uint8_t new_state, bool flag) {
     pthread_mutex_unlock(&mutex_game_logic);
 }
 
-int check_bird_accross_column(struct stGameInfo *game_point, stBirdInfo *bird, stColumnInfo *col_info)
+int check_bird_accross_column(stBirdInfo bird, stColumnInfo col_info)
 {
-    if(bird->bird_x > col_info->column_x)
+    if(bird.bird_x > col_info.column_x)
     {
         return 1;
     }

@@ -55,7 +55,7 @@ int check_bird_collision(struct stBirdInfo *bird, struct stColumnInfo *col_info)
 void create_column();
 void update_column(struct stColumnInfo *col_info);
 
-int check_bird_accross_column(struct stGameInfo *game_point, stBirdInfo *bird, stColumnInfo *col_info);
+int check_bird_accross_column(stBirdInfo bird, stColumnInfo col_info);
 void increase_point(struct stGameInfo *game_point);
 
 stBirdInfo init_bird(uint8_t bird_x, uint8_t bird_y, uint8_t bird_h, uint8_t bird_w, uint8_t bird_accel);

@@ -63,57 +63,54 @@ static int I2C_Read(unsigned char *out_buf, unsigned int len)
    return ret;
 }
 
-static void SSD1306_Write(bool is_cmd, unsigned char data, unsigned int len)
+static void SSD1306_Write(bool is_cmd, unsigned char *data, unsigned int len)
 {
-    unsigned char buf[len] ={0};
+    unsigned char buf[len + 1];  // +1 for command/data prefix
     int ret;
 
-    if( is_cmd == true )
-    {
-        buf[0] = 0x00;
-    }
+    if (is_cmd)
+        buf[0] = 0x00;  // Command prefix
     else
-    {
-        buf[0] = 0x40;
-    }
-    // buf[1] = data;
-    memcpy(buf[1], data, len);
+        buf[0] = 0x40;  // Data prefix
 
-    ret = I2C_Write(buf, len);
+    memcpy(&buf[1], data, len);  // Copy data after prefix
+
+    ret = I2C_Write(buf, len + 1);  // Write prefix + data
 }
 
 /* This function sends the commands that need to used to initialize OLED */
 static int SSD1306_DisplayInit(void)
 {
     msleep(100);
+    unsigned char cmd;
 
     /* Commands to initialize the SSD_1306 OLED Display*/
-    SSD1306_Write(true, 0xAE, 2); // Entire Display OFF
-    SSD1306_Write(true, 0xD5, 2); // Set Display Clock Divide Ratio and Oscillator Frequency
-    SSD1306_Write(true, 0x80, 2); // Default Setting for Display Clock Divide Ratio and Oscillator Frequency that is recommended
-    SSD1306_Write(true, 0xA8, 2); // Set Multiplex Ratio
-    SSD1306_Write(true, 0x3F, 2); // 64 COM lines
-    SSD1306_Write(true, 0xD3, 2); // Set display offset
-    SSD1306_Write(true, 0x00, 2); // 0 offset
-    SSD1306_Write(true, 0x40, 2); // Set first line as the start line of the display
-    SSD1306_Write(true, 0x8D, 2); // Charge pump
-    SSD1306_Write(true, 0x14, 2); // Enable charge dump during display on
-    SSD1306_Write(true, 0x20, 2); // Set memory addressing mode
-    SSD1306_Write(true, 0x00, 2); // Horizontal addressing mode
-    SSD1306_Write(true, 0xA1, 2); // Set segment remap with column address 127 mapped to segment 0
-    SSD1306_Write(true, 0xC8, 2); // Set com output scan direction, scan from com63 to com 0
-    SSD1306_Write(true, 0xDA, 2); // Set com pins hardware configuration
-    SSD1306_Write(true, 0x12, 2); // Alternative com pin configuration, disable com left/right remap
-    SSD1306_Write(true, 0x81, 2); // Set contrast control
-    SSD1306_Write(true, 0x80, 2); // Set Contrast to 128
-    SSD1306_Write(true, 0xD9, 2); // Set pre-charge period
-    SSD1306_Write(true, 0xF1, 2); // Phase 1 period of 15 DCLK, Phase 2 period of 1 DCLK
-    SSD1306_Write(true, 0xDB, 2); // Set Vcomh deselect level
-    SSD1306_Write(true, 0x20, 2); // Vcomh deselect level ~ 0.77 Vcc
-    SSD1306_Write(true, 0xA4, 2); // Entire display ON, resume to RAM content display
-    SSD1306_Write(true, 0xA6, 2); // Set Display in Normal Mode, 1 = ON, 0 = OFF
-    SSD1306_Write(true, 0x2E, 2); // Deactivate scroll
-    SSD1306_Write(true, 0xAF, 2); // Display ON in normal mode
+    cmd = 0xAE; SSD1306_Write(true, &cmd, 1); // Entire Display OFF
+    cmd = 0xD5; SSD1306_Write(true, &cmd, 1); // Set Display Clock Divide Ratio and Oscillator Frequency
+    cmd = 0x80; SSD1306_Write(true, &cmd, 1); // Default Setting for Display Clock Divide Ratio and Oscillator Frequency that is recommended
+    cmd = 0xA8; SSD1306_Write(true, &cmd, 1); // Set Multiplex Ratio
+    cmd = 0x3F; SSD1306_Write(true, &cmd, 1); // 64 COM lines
+    cmd = 0xD3; SSD1306_Write(true, &cmd, 1); // Set display offset
+    cmd = 0x00; SSD1306_Write(true, &cmd, 1); // 0 offset
+    cmd = 0x40; SSD1306_Write(true, &cmd, 1); // Set first line as the start line of the display
+    cmd = 0x8D; SSD1306_Write(true, &cmd, 1); // Charge pump
+    cmd = 0x14; SSD1306_Write(true, &cmd, 1); // Enable charge dump during display on
+    cmd = 0x20; SSD1306_Write(true, &cmd, 1); // Set memory addressing mode
+    cmd = 0x00; SSD1306_Write(true, &cmd, 1); // Horizontal addressing mode
+    cmd = 0xA1; SSD1306_Write(true, &cmd, 1); // Set segment remap with column address 127 mapped to segment 0
+    cmd = 0xC8; SSD1306_Write(true, &cmd, 1); // Set com output scan direction, scan from com63 to com 0
+    cmd = 0xDA; SSD1306_Write(true, &cmd, 1); // Set com pins hardware configuration
+    cmd = 0x12; SSD1306_Write(true, &cmd, 1); // Alternative com pin configuration, disable com left/right remap
+    cmd = 0x81; SSD1306_Write(true, &cmd, 1); // Set contrast control
+    cmd = 0x80; SSD1306_Write(true, &cmd, 1); // Set Contrast to 128
+    cmd = 0xD9; SSD1306_Write(true, &cmd, 1); // Set pre-charge period
+    cmd = 0xF1; SSD1306_Write(true, &cmd, 1); // Phase 1 period of 15 DCLK, Phase 2 period of 1 DCLK
+    cmd = 0xDB; SSD1306_Write(true, &cmd, 1); // Set Vcomh deselect level
+    cmd = 0x20; SSD1306_Write(true, &cmd, 1); // Vcomh deselect level ~ 0.77 Vcc
+    cmd = 0xA4; SSD1306_Write(true, &cmd, 1); // Entire display ON, resume to RAM content display
+    cmd = 0xA6; SSD1306_Write(true, &cmd, 1); // Set Display in Normal Mode, 1 = ON, 0 = OFF
+    cmd = 0x2E; SSD1306_Write(true, &cmd, 1); // Deactivate scroll
+    cmd = 0xAF; SSD1306_Write(true, &cmd, 1); // Display ON in normal mode
 
     return 0;
 }
@@ -121,45 +118,66 @@ static int SSD1306_DisplayInit(void)
 /* This function fills the complete OLED with this data byte */
 static void SSD1306_Fill(unsigned char data)
 {
-    unsigned int total  = 128*8; // 8 pages x 128 segments
-    unsigned int i      = 0;
+    unsigned int total = 128 * 8; // 8 pages x 128 segments
+    unsigned char buf[total];
 
-    // Fill the Display
-    for(i = 0; i < total; i++)
+    // Fill the buffer with the data byte
+    for (unsigned int i = 0; i < total; i++)
     {
-        SSD1306_Write(false, data, 2);
+        buf[i] = data;
+    }
+
+    // Before filling, set the page and column addresses properly
+    unsigned char cmd;
+
+    for (int page = 0; page < 8; page++)
+    {
+        cmd = 0xB0 + page; // Set page address
+        SSD1306_Write(true, &cmd, 1);
+
+        cmd = 0x00; // Set lower column start address to 0
+        SSD1306_Write(true, &cmd, 1);
+
+        cmd = 0x10; // Set higher column start address to 0
+        SSD1306_Write(true, &cmd, 1);
+
+        // Send 128 bytes of data for the current page
+        SSD1306_Write(false, &buf[page * 128], 128);
     }
 }
 
 static void oled_clear_display(void)
 {
     memset(display_buffer, 0x00, PAGE_NUM * COL_NUM * sizeof(uint8_t));
-    SSD1306_Fill(0x00);
+    unsigned char data = 0x00;
+    SSD1306_Fill(data);
 }
 
 static void oled_set_brightness(int level)
 {
+    unsigned char cmd;
     if(level < 0) level = 0;
     else if(level > 255) level = 255;
 
     oled_brightness = level;
-    SSD1306_Write(true, 0x81, 2); // Constast control command
-    SSD1306_Write(true, oled_brightness, 2);
+    cmd = 0x81; SSD1306_Write(true, &cmd, 1); // Constast control command
+    cmd = oled_brightness; SSD1306_Write(true, &cmd, 1);
 }
 
 static void oled_set_rotation(int rotation)
 {
+    unsigned char cmd;
     oled_rotation = rotation;
 
     switch(rotation)
     {
         case 0:
-            SSD1306_Write(true, 0xA1, 2); // segment remap column address 127 to 0
-            SSD1306_Write(true, 0xC8, 2); // COM output scan direction remapped
+            cmd = 0xA1; SSD1306_Write(true, &cmd, 1); // segment remap column address 127 to 0
+            cmd = 0xC8; SSD1306_Write(true, &cmd, 1); // COM output scan direction remapped
             break;
         case 1:
-            SSD1306_Write(true, 0xA0, 2);
-            SSD1306_Write(true, 0xC0, 2);
+            cmd = 0xA0; SSD1306_Write(true, &cmd, 1);
+            cmd = 0xC0; SSD1306_Write(true, &cmd, 1);
             break;
         default:
             break;
@@ -168,14 +186,15 @@ static void oled_set_rotation(int rotation)
 
 static void oled_set_display_mode(int mode)
 {
+    unsigned char cmd;
     oled_display_mode = mode;
     switch(mode)
     {
         case 0:
-            SSD1306_Write(true, 0xA6, 2);
+            cmd = 0xA6; SSD1306_Write(true, &cmd, 1);
             break;
         case 1:
-            SSD1306_Write(true, 0xA7, 2);
+            cmd = 0xA7; SSD1306_Write(true, &cmd, 1);
             break;
         default:
             break;
@@ -184,6 +203,7 @@ static void oled_set_display_mode(int mode)
 
 static long etx_oled_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 {
+    unsigned char cmd_in;
     int val = 0;
 
     switch(cmd)
@@ -209,16 +229,16 @@ static long etx_oled_ioctl(struct file *file, unsigned int cmd, unsigned long ar
         case ETX_IOCTL_SET_PAGE:
             if (copy_from_user(&val, (uint8_t __user *)arg, sizeof(val)))
                 return -EFAULT;
-            SSD1306_Write(true, 0xB0 + val, 2);
+            cmd_in = 0xB0 + val; SSD1306_Write(true, &cmd_in, 1);
             break;
         case ETX_IOCTL_SET_COL_LOW:
             if (copy_from_user(&val, (uint8_t __user *)arg, sizeof(val)))
                 return -EFAULT;
-            SSD1306_Write(true, val, 2);  // ở đây giá trị trỏ vào 0x00
+            cmd_in = val; SSD1306_Write(true, &cmd_in, 1);  // ở đây giá trị trỏ vào 0x00
         case ETX_IOCTL_SET_COL_HIGH:
             if (copy_from_user(&val, (uint8_t __user *)arg, sizeof(val)))
                 return -EFAULT;
-            SSD1306_Write(true, val, 2);  // ở đây giá trị trỏ vào 0x10
+            cmd_in = val; SSD1306_Write(true, &cmd_in, 1);  // ở đây giá trị trỏ vào 0x10
         default:
             return -EINVAL;
     }
@@ -259,6 +279,7 @@ static ssize_t etx_oled_write(struct file *file, const char __user *buf, size_t 
     size_t total_bytes = PAGE_NUM * COL_NUM;
     size_t bytes_to_write = (count > total_bytes) ? total_bytes : count;
     uint16_t count_print = 0;
+    unsigned char cmd;
     printk(KERN_INFO "Number of bytes to write: %d \n", bytes_to_write);
 
     // if(copy_from_user(&display_buffer[0][0], buf, bytes_to_write))
@@ -273,9 +294,9 @@ static ssize_t etx_oled_write(struct file *file, const char __user *buf, size_t 
 
     for(int page = 0; page < PAGE_NUM; page++)
     {   
-        SSD1306_Write(true, 0xB0 + page, 2);              // Set page start address
-        SSD1306_Write(true, 0x00, 2);              // Set lower column start address
-        SSD1306_Write(true, 0x10, 2);              // Set higher column start address
+        cmd = 0xB0+page; SSD1306_Write(true, &cmd, 1);              // Set page start address
+        cmd = 0x00; SSD1306_Write(true, &cmd, 1);              // Set lower column start address
+        cmd = 0x10; SSD1306_Write(true, &cmd, 1);              // Set higher column start address
         // send data column in page
         // for(int col = 0; col < COL_NUM; col++)
         // {
@@ -284,8 +305,8 @@ static ssize_t etx_oled_write(struct file *file, const char __user *buf, size_t 
         // }
         unsigned char buf_page[1+COL_NUM];
         // buf[0] = 0x40; // Data prefix
-        memcpy(&buf[1], &display_buffer_1d[page * COL_NUM], COL_NUM);
-        SSD1306_Write(true, buf, 1+COL_NUM);
+        memcpy(&buf[1], (unsigned char *) &display_buffer_1d[page * COL_NUM], COL_NUM);
+        SSD1306_Write(true, &display_buffer_1d[page * COL_NUM], COL_NUM);
         // I2C_Write(buf, 1+COL_NUM); // Send 129 bytes in 1 go
     }
 
