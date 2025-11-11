@@ -75,6 +75,7 @@ static void SSD1306_Write(bool is_cmd, unsigned char *data, unsigned int len)
 
     memcpy(&buf[1], data, len);  // Copy data after prefix
 
+    pr_info("Start write buffer!\n");
     ret = I2C_Write(buf, len + 1);  // Write prefix + data
 }
 
