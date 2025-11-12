@@ -25,6 +25,8 @@ void *game_logic_thread_func(void *arg)
     bool render_flag_local;
     uint8_t game_state_local = -1;
     uint8_t stop_count = 10;
+    uint8_t wait_count = 5;
+    bool check_move = false;
     while(1)
     {
         get_render_flag_and_state(&render_flag_local, &game_state_local);
@@ -47,15 +49,26 @@ void *game_logic_thread_func(void *arg)
             if(button_is_pressed(BUTTON_LINE_OFFSET))
             {
                 move_up(&bird);
+                check_move = true;
             }
             else
             {
-                move_down(&bird);
+                check_move = false;
             }
-
             // Update columns
-            update_column(&col_top_info);
-            update_column(&col_bottom_info);
+            if(wait_count > 0)
+            {
+                wait_count--;
+            }
+            else{
+                update_column(&col_top_info);
+                update_column(&col_bottom_info);
+                if(!check_move)
+                {
+                    move_down(&bird);
+                }
+                // wait_count = 5;
+            }
 
             // Check for collisions
             if(check_bird_collision(&bird, &col_bottom_info) != 0 ||
@@ -63,7 +76,7 @@ void *game_logic_thread_func(void *arg)
             {
                 game_state_local = GAME_STATE_OVER;
                 PRINTF_INFO("COLLISION CHECK!\n");
-                stop_count = 10;
+                stop_count = 5;
             }
             render_flag_local = true;
 
@@ -77,8 +90,11 @@ void *game_logic_thread_func(void *arg)
         else if(game_state_local == GAME_STATE_OVER)
         {
             // Handle game over state
-            stop_count--;
-            if(button_is_pressed(BUTTON_LINE_OFFSET) && stop_count < 0)
+            if(stop_count > 0)
+            {
+                stop_count--;
+            }
+            if(button_is_pressed(BUTTON_LINE_OFFSET) && stop_count == 0)
             {
                 init_game(game_speed);
                 game_state_local = GAME_STATE_READY;
@@ -86,7 +102,7 @@ void *game_logic_thread_func(void *arg)
             }
         }
         set_game_state_and_render_flag(game_state_local, render_flag_local);
-        delay_ms(100);
+        delay_ms(30);
     }
     return NULL;
 }

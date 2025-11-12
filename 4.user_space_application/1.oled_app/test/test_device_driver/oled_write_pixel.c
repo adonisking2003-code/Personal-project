@@ -18,27 +18,17 @@ int main()
         perror("Open device failed");
         return 1;
     }
-
-    size_t buffer_size = PAGE_NUM * COL_NUM;
-    unsigned char buffer[buffer_size];
-
-    memset(buffer, 0xFF, buffer_size);
-
-    printf("Clear display \n");
-
+    oled_clear_display(fd);
+    delay_ms(1000);
     // oled_clear_display(fd);
     draw_bit_map(fd, 0, 0, number_0, 10, 16, true);
 
     update_oled_display(fd);
-    delay_ms(2000);
-    // Test all characters
-    for (uint8_t i = 5; i <= 15; i++) {
-        for (uint8_t t = 0; t < 2; t++) {
-            draw_pixel(5 + t, i, 0xFF);
-        }
-    }
-    update_oled_display(fd);
-    delay_ms(5000);
+    // delay_ms(2000);
+    // printf("Clear display \n");
+    // oled_clear_display(fd);
+    // // update_oled_display(fd);
+    // delay_ms(5000);
     close(fd);
     return 0;
 }

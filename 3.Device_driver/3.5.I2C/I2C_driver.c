@@ -49,6 +49,7 @@ static int I2C_Write(unsigned char *buf, unsigned int len)
     ** Sending Start condition, Slave address withR/W bit
     ** ACK/NACK and Stop condition will be handled internally.
     */
+   pr_info("Send data!\n");
    int ret = i2c_master_send(etx_i2c_client_oled, buf, len);
    return ret;
 }
@@ -306,8 +307,8 @@ static ssize_t etx_oled_write(struct file *file, const char __user *buf, size_t 
         // }
         unsigned char buf_page[1+COL_NUM];
         // buf[0] = 0x40; // Data prefix
-        memcpy(&buf[1], (unsigned char *) &display_buffer_1d[page * COL_NUM], COL_NUM);
-        SSD1306_Write(true, &display_buffer_1d[page * COL_NUM], COL_NUM);
+        memcpy(&buf_page[1], (unsigned char *) &display_buffer_1d[page * COL_NUM], COL_NUM);
+        SSD1306_Write(false, &buf_page[0], COL_NUM);
         // I2C_Write(buf, 1+COL_NUM); // Send 129 bytes in 1 go
     }
 

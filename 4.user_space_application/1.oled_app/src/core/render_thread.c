@@ -50,7 +50,7 @@ void *render_thread_func(void *arg)
             }
             set_game_state_and_render_flag(game_state_local, false);
         }
-        delay_ms(50); // Run at 20Hz (20 frame/s), adjust if needed
+        delay_ms(30); // Run at 20Hz (20 frame/s), adjust if needed
     }
     return NULL;
 }
