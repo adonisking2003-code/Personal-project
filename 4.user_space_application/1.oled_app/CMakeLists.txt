@@ -25,6 +25,8 @@ set(DRIVER_SOURCES
   ${PROJECT_SOURCE_DIR}/src/drivers/seven_segment.c
   ${PROJECT_SOURCE_DIR}/src/drivers/ssd1306_data.c
   ${PROJECT_SOURCE_DIR}/src/drivers/alphabet_font10.c
+  ${PROJECT_SOURCE_DIR}/src/drivers/buzzer.c
+  ${PROJECT_SOURCE_DIR}/src/drivers/pwm_control.c
 )
 
 # Core source
@@ -45,6 +47,10 @@ set(TEST_OLED_SOURCES
 
 set(TEST_BUTTON_SOURCES
   ${PROJECT_SOURCE_DIR}/test/test_HAL/test_button.c
+)
+
+set(TEST_BUZZER_SOURCES
+  ${PROJECT_SOURCE_DIR}/test/test_HAL/test_buzzer.c
 )
 
 set(TEST_APP_SOURCES
@@ -73,6 +79,13 @@ add_executable(oled_write_pixel
 
 add_executable(test_button
   ${TEST_BUTTON_SOURCES}
+  ${CORE_SOURCES}
+  ${DRIVER_SOURCES}
+  ${UTILS_SOURCES}
+)
+
+add_executable(test_buzzer
+  ${TEST_BUZZER_SOURCES}
   ${CORE_SOURCES}
   ${DRIVER_SOURCES}
   ${UTILS_SOURCES}
