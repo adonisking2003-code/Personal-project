@@ -276,41 +276,78 @@ void print_display_buffer(uint8_t *buffer, size_t size)
     }
 }
 
+// static ssize_t etx_oled_write(struct file *file, const char __user *buf, size_t count, loff_t *ppos)
+// {
+//     size_t total_bytes = PAGE_NUM * COL_NUM;
+//     size_t bytes_to_write = (count > total_bytes) ? total_bytes : count;
+//     uint16_t count_print = 0;
+//     unsigned char cmd;
+//     printk(KERN_INFO "Number of bytes to write: %d \n", bytes_to_write);
+
+//     // if(copy_from_user(&display_buffer[0][0], buf, bytes_to_write))
+//     if(copy_from_user(&display_buffer_1d, buf, bytes_to_write))
+//         return -EFAULT;
+    
+//     // print_display_buffer(display_buffer_1d, 1024);
+//     pr_info("display_buffer[0] = %d\n", display_buffer_1d[0]);
+//     pr_info("display_buffer[1] = %d\n", display_buffer_1d[1]);
+//     pr_info("display_buffer[128] = %d\n", display_buffer_1d[128]);
+//     pr_info("display_buffer[129] = %d\n", display_buffer_1d[129]);
+
+//     for(int page = 0; page < PAGE_NUM; page++)
+//     {   
+//         cmd = 0xB0+page; SSD1306_Write(true, &cmd, 1);              // Set page start address
+//         cmd = 0x00; SSD1306_Write(true, &cmd, 1);              // Set lower column start address
+//         cmd = 0x10; SSD1306_Write(true, &cmd, 1);              // Set higher column start address
+//         // send data column in page
+//         // for(int col = 0; col < COL_NUM; col++)
+//         // {
+//         //     SSD1306_Write(false, display_buffer_1d[page * COL_NUM + col]);
+//         //     // msleep(500);
+//         // }
+//         unsigned char buf_page[1+COL_NUM];
+//         // buf[0] = 0x40; // Data prefix
+//         memcpy(&buf_page[1], (unsigned char *) &display_buffer_1d[page * COL_NUM], COL_NUM);
+//         SSD1306_Write(false, &buf_page[0], COL_NUM);
+//         // I2C_Write(buf, 1+COL_NUM); // Send 129 bytes in 1 go
+//     }
+
+//     return bytes_to_write;
+// }
+
+
 static ssize_t etx_oled_write(struct file *file, const char __user *buf, size_t count, loff_t *ppos)
 {
-    size_t total_bytes = PAGE_NUM * COL_NUM;
+    size_t total_bytes = PAGE_NUM * COL_NUM; // PAGE_NUM = 8, COL_NUM = 128
     size_t bytes_to_write = (count > total_bytes) ? total_bytes : count;
-    uint16_t count_print = 0;
     unsigned char cmd;
-    printk(KERN_INFO "Number of bytes to write: %d \n", bytes_to_write);
+    printk(KERN_INFO "Number of bytes to write: %zu\n", bytes_to_write);
 
-    // if(copy_from_user(&display_buffer[0][0], buf, bytes_to_write))
-    if(copy_from_user(&display_buffer_1d, buf, bytes_to_write))
+    // Copy data từ user space vào kernel buffer
+    if (copy_from_user(display_buffer_1d, buf, bytes_to_write))
         return -EFAULT;
-    
-    // print_display_buffer(display_buffer_1d, 1024);
+
+    // Debug vài byte
     pr_info("display_buffer[0] = %d\n", display_buffer_1d[0]);
     pr_info("display_buffer[1] = %d\n", display_buffer_1d[1]);
     pr_info("display_buffer[128] = %d\n", display_buffer_1d[128]);
     pr_info("display_buffer[129] = %d\n", display_buffer_1d[129]);
 
-    for(int page = 0; page < PAGE_NUM; page++)
-    {   
-        cmd = 0xB0+page; SSD1306_Write(true, &cmd, 1);              // Set page start address
-        cmd = 0x00; SSD1306_Write(true, &cmd, 1);              // Set lower column start address
-        cmd = 0x10; SSD1306_Write(true, &cmd, 1);              // Set higher column start address
-        // send data column in page
-        // for(int col = 0; col < COL_NUM; col++)
-        // {
-        //     SSD1306_Write(false, display_buffer_1d[page * COL_NUM + col]);
-        //     // msleep(500);
-        // }
-        unsigned char buf_page[1+COL_NUM];
-        // buf[0] = 0x40; // Data prefix
-        memcpy(&buf_page[1], (unsigned char *) &display_buffer_1d[page * COL_NUM], COL_NUM);
-        SSD1306_Write(false, &buf_page[0], COL_NUM);
-        // I2C_Write(buf, 1+COL_NUM); // Send 129 bytes in 1 go
-    }
+    // 1. Set column range: 0 -> 127
+    unsigned char col_cmds[] = {0x21, 0x00, 0x7F};
+    SSD1306_Write(true, col_cmds, sizeof(col_cmds));
+
+    // 2. Set page range: 0 -> 7
+    unsigned char page_cmds[] = {0x22, 0x00, 0x07};
+    SSD1306_Write(true, page_cmds, sizeof(page_cmds));
+
+    // 3. Burst full frame: prefix + 1024 bytes
+    unsigned char buf_frame[1 + total_bytes];
+    buf_frame[0] = 0x40; // Data prefix
+    memcpy(&buf_frame[1], display_buffer_1d, total_bytes);
+
+    // Gửi toàn bộ frame trong một lần
+    SSD1306_Write(false, buf_frame, sizeof(buf_frame));
 
     return bytes_to_write;
 }
