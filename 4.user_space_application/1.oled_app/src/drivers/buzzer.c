@@ -38,41 +38,69 @@ void *buzzer_task(void *arg) {
 e_app_return_t buzzer_init(uint8_t buzzer_gpio)
 {
     int ret = pwm_init("/dev/pwm_device");
+    if( ret = = APP_RET_OK)
+    {
+        PRINTF_INFO("buzzer initialize success!\n");
+    }
+    else
+    {
+        PRINTF_ERROR("buzzer init failed!\n");
+    }
     return ret;
 }
 
 e_app_return_t buzzer_run(e_buzzer_mode mode)
 {
-    switch(mode)
+    int count = 20;
+    int while_count = 5000;
+    while(while_count>0)
     {
-        case BUZZER_MODE_OFF:
-            buzzer_control(0, 0);
-        break;
-        case BUZZER_MODE_ON:
-            buzzer_control(50, 0);
-            delay_ms(200);
-            buzzer_control(0, 0);
-        break;
-        case BUZZER_BEEP:
-            while(true)
-            {
+        switch(mode)
+        {
+            case BUZZER_MODE_OFF:
+                buzzer_control(0, 0);
+                delay_ms(1000);
+                mode = BUZZER_MODE_ON;
+            break;
+            case BUZZER_MODE_ON:
                 buzzer_control(50, 0);
-                delay_ms(100);
+                delay_ms(200);
                 buzzer_control(0, 0);
                 delay_ms(100);
-            }
-        break;
-        case BUZZER_PLAY_MELODY:
-            int melody[] = {1000, 1500, 2000}; // Hz
-            for (i = 0; i < size; i++) {
-                buzzer_control(50, melody[i]);
-                usleep(300000); // 300ms mỗi nốt
-            }
-        break;
-        default:
-            return APP_RET_ERR_IO_DEV_CLOSE;
-        break;
+                if(count < 0)
+                {
+                    mode = BUZZER_BEEP;
+                    count = 20;
+                }
+            break;
+            case BUZZER_BEEP:
+                    buzzer_control(50, 0);
+                    delay_ms(100);
+                    buzzer_control(0, 0);
+                    delay_ms(100);
+                    count--;
+                    delay_ms(300);
+                    if(count < 0)
+                    {
+                        mode = BUZZER_PLAY_MELODY;
+                        count = 20;
+                    }
+            break;
+            case BUZZER_PLAY_MELODY:
+                int melody[] = {1000, 1500, 2000}; // Hz
+                for (i = 0; i < size; i++) {
+                    buzzer_control(50, melody[i]);
+                    usleep(300000); // 300ms mỗi nốt
+                }
+                mode = BUZZER_MODE_OFF;
+            break;
+            default:
+                return APP_RET_ERR_IO_DEV_CLOSE;
+            break;
+        }
+        while_count--;
     }
+    
     return APP_RET_OK;
 }
 
@@ -92,5 +120,13 @@ e_app_return_t buzzer_control(int duty_cycle, int period)
 e_app_return_t buzzer_deinit(uint8_t buzzer_gpio)
 {
     int ret = pwm_deinit();
+    if( ret = = APP_RET_OK)
+    {
+        PRINTF_INFO("buzzer deinit success!\n");
+    }
+    else
+    {
+        PRINTF_ERROR("buzzer deinit failed!\n");
+    }
     return ret;
 }
