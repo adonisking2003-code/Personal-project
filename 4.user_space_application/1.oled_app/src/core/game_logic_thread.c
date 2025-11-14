@@ -48,7 +48,12 @@ void *game_logic_thread_func(void *arg)
             PRINTF_INFO("Start playing!\n");
             if(button_is_pressed(BUTTON_LINE_OFFSET))
             {
-                move_up(&bird);
+                if( move_up(&bird) == APP_RET_ERR_INVALID_BUFFER_INDEX)
+                {
+                    game_state_local = GAME_STATE_OVER;
+                    PRINTF_INFO("Out boundary!\n");
+                    stop_count = 5;
+                }
                 check_move = true;
             }
             else
@@ -65,7 +70,12 @@ void *game_logic_thread_func(void *arg)
                 update_column(&col_bottom_info);
                 if(!check_move)
                 {
-                    move_down(&bird);
+                    if( move_down(&bird) == APP_RET_ERR_INVALID_BUFFER_INDEX)
+                    {
+                        game_state_local = GAME_STATE_OVER;
+                        PRINTF_INFO("Out boundary!\n");
+                        stop_count = 5;
+                    }
                 }
                 // wait_count = 5;
             }
@@ -107,14 +117,25 @@ void *game_logic_thread_func(void *arg)
     return NULL;
 }
 
-void move_up(struct stBirdInfo *bird)
+e_app_return_t move_up(struct stBirdInfo *bird)
 {
-	bird->bird_y-=bird->bird_acceleration;
+    if(bird->bird_y - bird->bird_acceleration > 0)
+    {
+        bird->bird_y-=bird->bird_acceleration;
+        return APP_RET_OK;
+    }
+	return APP_RET_ERR_INVALID_BUFFER_INDEX;
 }
 
-void move_down(struct stBirdInfo *bird)
+e_app_return_t move_down(struct stBirdInfo *bird)
 {
-	bird->bird_y+=bird->bird_acceleration;
+    if(bird->bird_y < 64 - bird->bird_acceleration)
+    {
+        bird->bird_y += bird->bird_acceleration;
+        return APP_RET_OK;
+    }
+
+    return APP_RET_ERR_INVALID_BUFFER_INDEX;
 }
 
 int check_bird_collision(struct stBirdInfo *bird, struct stColumnInfo *col_bottom_info)
@@ -226,7 +247,7 @@ void set_game_state_and_render_flag(uint8_t new_state, bool flag) {
 
 int check_bird_accross_column(stBirdInfo bird, stColumnInfo col_info)
 {
-    if(bird.bird_x > col_info.column_x)
+    if(bird.bird_x > col_info.column_x+20)
     {
         return 1;
     }

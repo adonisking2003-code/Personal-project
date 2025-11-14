@@ -48,8 +48,8 @@ typedef struct stGameInfo {
 
 void *game_logic_thread_func(void *arg);
 
-void move_up(struct stBirdInfo *bird);
-void move_down(struct stBirdInfo *bird);
+e_app_return_t move_up(struct stBirdInfo *bird);
+e_app_return_t move_down(struct stBirdInfo *bird);
 int check_bird_collision(struct stBirdInfo *bird, struct stColumnInfo *col_info);
 
 void create_column();
